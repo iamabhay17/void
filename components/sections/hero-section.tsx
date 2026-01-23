@@ -18,7 +18,7 @@ export const HeroSection = () => {
         </div>
       </div>
       {/* Bio */}
-      <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-lg text-pretty mb-6 lg:mb-8">
+      <p className="text-base text-muted-foreground leading-relaxed max-w-lg text-pretty mb-6 lg:mb-8">
         Software Engineer based in India, building user interfaces and enhancing
         experiences. Currently at HROne in Platform Team.
       </p>

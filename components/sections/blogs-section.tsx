@@ -50,15 +50,15 @@ export function BlogsSection() {
             className="group block -mx-4 px-4 py-5 rounded-lg hover:bg-accent/50 transition-colors"
           >
             <article className="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-1 md:gap-12">
-              <span className="text-xs lg:text-sm tabular-nums text-muted-foreground">
+              <span className="text-xs font-medium md:text-sm tabular-nums text-muted-foreground">
                 {post.date}
               </span>
               <div className="space-y-1.5">
-                <h3 className="text-sm lg:text-base font-medium text-foreground inline-flex items-center gap-1.5 group-hover:text-primary transition-colors">
+                <h3 className="text-sm lg:text-base font-semibold text-foreground inline-flex items-center gap-1.5 group-hover:text-primary transition-colors">
                   <span className="text-balance">{post.title}</span>
                   <ArrowUpRight className="size-4 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
-                <p className="text-xs lg:text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm mt-1 text-muted-foreground leading-relaxed">
                   {post.description}
                 </p>
               </div>

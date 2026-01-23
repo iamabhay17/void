@@ -88,12 +88,12 @@ export const ExperienceSection = () => {
 
             <div className="space-y-4">
               <div>
-                <h3 className="text-sm lg:text-base font-medium text-foreground leading-tight">
+                <h3 className="text-sm lg:text-base font-semibold text-foreground leading-tight">
                   {exp.title}
                 </h3>
                 <a
                   href={exp.companyUrl}
-                  className="inline-flex items-center gap-1 text-xs lg:text-sm text-muted-foreground hover:text-foreground transition-colors mt-0.5"
+                  className="inline-flex items-center gap-1 font-medium text-sm text-muted-foreground hover:text-foreground transition-colors mt-0.5"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -101,7 +101,7 @@ export const ExperienceSection = () => {
                   <ArrowUpRight className="size-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
               </div>
-              <p className="text-xs lg:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed pt-1">
                 {exp.description}
               </p>
               <div className="flex flex-wrap gap-1.5">
