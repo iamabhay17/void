@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
+import remarkGfm from "remark-gfm";
 import { getAllBlogs, getBlogBySlug } from "@/lib/blog";
 import { formatDate } from "@/lib/date";
 import { mdxComponents } from "@/lib/mdx-components";
@@ -105,13 +106,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             components={mdxComponents}
             options={{
               mdxOptions: {
+                remarkPlugins: [remarkGfm],
                 rehypePlugins: [
                   [
                     rehypePrettyCode,
                     {
-                      theme: "github-dark",
-                      keepBackground: true,
+                      theme: {
+                        dark: "github-dark",
+                        light: "github-light",
+                      },
+                      keepBackground: false,
                       defaultLang: "plaintext",
+                      cssVariablePrefix: "--shiki-",
                     },
                   ],
                 ],

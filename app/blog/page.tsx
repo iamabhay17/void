@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { getPaginatedBlogs } from "@/lib/blog";
 import { formatDate } from "@/lib/date";
 import { Container } from "@/components/molecules/container";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Blog | Abhay Bhardwaj",
@@ -24,13 +25,20 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   return (
     <Container className="mb-30">
       {/* Header */}
-      <header className="mt-8 mb-20">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground text-pretty">
+      <header className="mb-12 mt-4">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
+          <Badge variant="secondary">Blogs</Badge>
+          <Badge variant="secondary">Engineering Nuggets</Badge>
+        </div>
+
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground text-pretty mb-4">
           Engineering Thoughts &amp; Insights
         </h1>
-        <p className="mt-3 text-sm lg:text-base text-muted-foreground max-w-lg leading-relaxed">
-          Thoughts on software engineering, web development, and building great
-          products. {total} articles and counting…
+
+        <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
+          What I’ve learned about writing better code, designing scalable
+          systems, and building products that last.
+          {total}+ articles and growing.
         </p>
       </header>
 
