@@ -1,0 +1,273 @@
+---
+title: Markdown Style Guide
+description: A comprehensive showcase of all markdown elements and their styled appearances.
+date: 2026-02-13
+published: true
+tags:
+  - Style Guide
+  - Markdown
+  - Testing
+---
+
+# Heading 1 - Main Title
+
+This is the main heading, typically used once per document for the primary title.
+
+## Heading 2 - Section Title
+
+Section headings help organize content into logical parts.
+
+### Heading 3 - Subsection
+
+Subsections provide more granular organization within sections.
+
+#### Heading 4 - Minor Heading
+
+For less prominent divisions of content.
+
+---
+
+## Paragraphs and Text Formatting
+
+This is a regular paragraph with some **bold text** and _italic text_. You can also combine them for **_bold and italic_** text. Here's some `inline code` that stands out from regular text.
+
+Another paragraph to show spacing. Text should be readable with proper line height and spacing between paragraphs. Long paragraphs help demonstrate how text wraps and how comfortable it is to read extended content on the page.
+
+## Links
+
+Here's an [internal link](/blog) to the blog page and an [external link](https://github.com) that opens in a new tab. Links should be clearly distinguishable from regular text.
+
+## Lists
+
+### Unordered List
+
+- First item in the list
+- Second item with more text to show how wrapping works
+- Third item
+  - Nested item one
+  - Nested item two
+- Fourth item
+
+### Ordered List
+
+1. First numbered item
+2. Second numbered item
+3. Third numbered item with extra text to demonstrate longer list items
+4. Fourth item
+
+### Task List
+
+- [x] Completed task
+- [ ] Incomplete task
+- [x] Another completed task
+
+## Blockquotes
+
+> This is a blockquote. It's used to highlight important quotes or callout information that deserves special attention from readers.
+
+> Multi-line blockquotes also work well.
+>
+> They can span multiple paragraphs and maintain consistent styling throughout.
+
+## Code
+
+### Inline Code
+
+Use `const` for constants, `let` for variables, and `function` for function declarations. You can also reference file paths like `src/components/Button.tsx` or commands like `npm install`.
+
+### Code Blocks
+
+Here's a JavaScript example:
+
+```javascript
+// A simple function with syntax highlighting
+function greet(name) {
+  const greeting = `Hello, ${name}!`;
+  console.log(greeting);
+  return greeting;
+}
+
+greet("World");
+```
+
+TypeScript with types:
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+async function fetchUser(id: string): Promise<User | null> {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+    if (!response.ok) return null;
+    return response.json();
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    return null;
+  }
+}
+```
+
+React component example:
+
+```tsx
+import { useState } from "react";
+
+interface CounterProps {
+  initialValue?: number;
+}
+
+export function Counter({ initialValue = 0 }: CounterProps) {
+  const [count, setCount] = useState(initialValue);
+
+  return (
+    <div className="flex items-center gap-4">
+      <button onClick={() => setCount((c) => c - 1)}>-</button>
+      <span>{count}</span>
+      <button onClick={() => setCount((c) => c + 1)}>+</button>
+    </div>
+  );
+}
+```
+
+CSS styling:
+
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: var(--background);
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+```
+
+Shell commands:
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+JSON configuration:
+
+```json
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  }
+}
+```
+
+## Tables
+
+| Feature     | Status  | Notes                        |
+| ----------- | ------- | ---------------------------- |
+| Headings    | ✅ Done | All levels h1-h4             |
+| Paragraphs  | ✅ Done | With proper spacing          |
+| Lists       | ✅ Done | Ordered and unordered        |
+| Code blocks | ✅ Done | Syntax highlighting included |
+| Tables      | ✅ Done | Responsive with overflow     |
+| Blockquotes | ✅ Done | Styled with left border      |
+
+Alignment in tables:
+
+| Left Aligned | Center Aligned | Right Aligned |
+| :----------- | :------------: | ------------: |
+| Content      |    Content     |       Content |
+| More         |      Data      |          Here |
+
+## Horizontal Rule
+
+Content before the rule.
+
+---
+
+Content after the rule.
+
+## Emphasis and Strong
+
+- _Single asterisks_ for italic
+- **Double asterisks** for bold
+- **_Triple asterisks_** for bold italic
+- _Underscores also work_ for italic
+- **Double underscores** for bold
+
+## Mixed Content
+
+Here's a paragraph with **bold**, _italic_, `code`, and a [link](https://example.com) all together. This tests how different inline styles interact with each other.
+
+> **Note:** Blockquotes can contain **formatted text**, `inline code`, and even [links](https://example.com).
+
+## Long Code Block
+
+This tests scrolling behavior for longer code:
+
+```typescript
+// A more complex example to test horizontal scrolling
+export class DataProcessor<T extends Record<string, unknown>> {
+  private readonly data: T[];
+  private readonly transformers: Array<(item: T) => T>;
+
+  constructor(initialData: T[] = []) {
+    this.data = initialData;
+    this.transformers = [];
+  }
+
+  addTransformer(transformer: (item: T) => T): this {
+    this.transformers.push(transformer);
+    return this;
+  }
+
+  process(): T[] {
+    return this.data.map((item) =>
+      this.transformers.reduce((acc, transformer) => transformer(acc), item),
+    );
+  }
+
+  filter(predicate: (item: T) => boolean): T[] {
+    return this.process().filter(predicate);
+  }
+
+  async processAsync(): Promise<T[]> {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(this.process()), 100);
+    });
+  }
+}
+
+// Usage example with very long lines to test horizontal scrolling in the code block component
+const processor = new DataProcessor([
+  {
+    id: 1,
+    name: "Item 1",
+    description:
+      "A very long description that might cause horizontal scrolling in the code block",
+  },
+]);
+```
+
+## Conclusion
+
+This style guide covers all the major markdown elements. Use it as a reference to ensure consistent styling across your content.

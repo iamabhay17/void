@@ -137,6 +137,7 @@ export function useMDXComponents(): MDXComponents {
           className={cn(
             "rounded font-mono text-[13px] text-foreground",
             className,
+            "inline-code",
           )}
           {...props}
         >
