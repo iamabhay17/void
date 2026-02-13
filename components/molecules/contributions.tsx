@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import {
   Activity,
   ContributionGraph,
@@ -21,7 +21,14 @@ export function GitHubContributionGraph({
 }) {
   const data = use(contributions);
 
-  const isMobile = window.innerWidth < 640; // Example breakpoint for mobile
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <ContributionGraph
