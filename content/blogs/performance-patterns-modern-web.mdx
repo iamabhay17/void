@@ -1,0 +1,191 @@
+---
+title: Performance Patterns in Modern Web Apps
+description: Practical techniques for building fast, responsive applications.
+date: 2025-11-20
+published: true
+tags:
+  - Performance
+  - React
+  - Optimization
+---
+
+# Performance Patterns in Modern Web Apps
+
+Building performant web applications requires understanding both the browser and your framework. Here are practical patterns I use daily.
+
+## Measuring First
+
+Before optimizing, measure. Use these tools:
+
+- **Lighthouse** — Overall performance score
+- **Chrome DevTools Performance** — Detailed timeline
+- **React DevTools Profiler** — Component render times
+- **Web Vitals** — Core metrics (LCP, FID, CLS)
+
+## Code Splitting
+
+Don't ship code users don't need:
+
+```tsx
+// ❌ Loading everything upfront
+import { HeavyEditor } from "./HeavyEditor";
+
+// ✅ Dynamic import with Next.js
+import dynamic from "next/dynamic";
+
+const HeavyEditor = dynamic(() => import("./HeavyEditor"), {
+  loading: () => <EditorSkeleton />,
+  ssr: false,
+});
+```
+
+## Memoization Patterns
+
+Use memoization wisely—it's not always the answer:
+
+```tsx
+// ✅ Good use case - expensive computation
+const sortedItems = useMemo(
+  () => items.sort((a, b) => a.name.localeCompare(b.name)),
+  [items],
+);
+
+// ❌ Unnecessary - simple value
+const doubled = useMemo(() => count * 2, [count]); // Just use: count * 2
+
+// ✅ Stable callback references
+const handleSubmit = useCallback(
+  async (data: FormData) => {
+    await submitForm(data);
+    onSuccess();
+  },
+  [onSuccess],
+);
+```
+
+## Virtualization for Long Lists
+
+Render only what's visible:
+
+```tsx
+import { useVirtualizer } from "@tanstack/react-virtual";
+
+function VirtualList({ items }: { items: Item[] }) {
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: items.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 50,
+  });
+
+  return (
+    <div ref={parentRef} style={{ height: "400px", overflow: "auto" }}>
+      <div
+        style={{
+          height: `${virtualizer.getTotalSize()}px`,
+          position: "relative",
+        }}
+      >
+        {virtualizer.getVirtualItems().map((virtualItem) => (
+          <div
+            key={virtualItem.key}
+            style={{
+              position: "absolute",
+              top: 0,
+              transform: `translateY(${virtualItem.start}px)`,
+              height: `${virtualItem.size}px`,
+            }}
+          >
+            {items[virtualItem.index].name}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+## Image Optimization
+
+Images are often the biggest culprit:
+
+```tsx
+import Image from "next/image";
+
+// ✅ Next.js Image component handles everything
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  width={1200}
+  height={600}
+  priority // Above the fold
+  placeholder="blur"
+  blurDataURL={blurDataUrl}
+/>
+
+// For below-fold images
+<Image
+  src="/feature.jpg"
+  alt="Feature"
+  width={600}
+  height={400}
+  loading="lazy"
+/>
+```
+
+## Debouncing & Throttling
+
+Control expensive operations:
+
+```tsx
+import { useDeferredValue, useState } from "react";
+
+function SearchResults({ query }: { query: string }) {
+  // React 18+ built-in debouncing
+  const deferredQuery = useDeferredValue(query);
+
+  const results = useMemo(
+    () => expensiveFilter(items, deferredQuery),
+    [deferredQuery],
+  );
+
+  return (
+    <ul>
+      {results.map((item) => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## Bundle Analysis
+
+Understand what you're shipping:
+
+```bash
+# Analyze your Next.js bundle
+npx @next/bundle-analyzer
+```
+
+Look for:
+
+- Duplicate dependencies
+- Unnecessarily large packages
+- Code that could be lazy-loaded
+
+## Key Metrics to Track
+
+| Metric | Target  | Impact               |
+| ------ | ------- | -------------------- |
+| LCP    | < 2.5s  | Perceived load speed |
+| FID    | < 100ms | Interactivity        |
+| CLS    | < 0.1   | Visual stability     |
+| TTI    | < 3.8s  | Full interactivity   |
+
+## Conclusion
+
+Performance optimization is an ongoing process. Measure, optimize, and measure again. Focus on the metrics that matter most to your users.
+
+> "Premature optimization is the root of all evil—but so is ignoring performance until it's too late."

@@ -1,0 +1,117 @@
+---
+title: The Art of Code Review
+description: Lessons learned from reviewing thousands of pull requests over the years.
+date: 2025-12-10
+published: true
+tags:
+  - Engineering
+  - Best Practices
+  - Team Collaboration
+---
+
+# The Art of Code Review
+
+Code review is more than just catching bugs—it's about knowledge sharing, maintaining code quality, and building better software together.
+
+## The Purpose of Code Review
+
+After reviewing thousands of pull requests, I've found that effective code reviews serve multiple purposes:
+
+1. **Knowledge transfer** — Spreading understanding across the team
+2. **Bug prevention** — Catching issues before they reach production
+3. **Code quality** — Maintaining consistent standards
+4. **Mentorship** — Helping engineers grow
+
+## What to Look For
+
+When reviewing code, focus on these key areas:
+
+### Logic & Correctness
+
+```typescript
+// ❌ Bug: Off-by-one error
+for (let i = 0; i <= items.length; i++) {
+  process(items[i]); // Will access undefined
+}
+
+// ✅ Fixed
+for (let i = 0; i < items.length; i++) {
+  process(items[i]);
+}
+```
+
+### Error Handling
+
+Always ensure errors are properly handled:
+
+```typescript
+// ❌ Silent failures
+async function fetchUser(id: string) {
+  try {
+    const response = await api.get(`/users/${id}`);
+    return response.data;
+  } catch {
+    return null; // What went wrong?
+  }
+}
+
+// ✅ Proper error handling
+async function fetchUser(id: string) {
+  try {
+    const response = await api.get(`/users/${id}`);
+    return { data: response.data, error: null };
+  } catch (error) {
+    console.error(`Failed to fetch user ${id}:`, error);
+    return {
+      data: null,
+      error: error instanceof Error ? error : new Error("Unknown error"),
+    };
+  }
+}
+```
+
+### Performance Considerations
+
+Watch for unintentional performance issues:
+
+```typescript
+// ❌ N+1 queries in a loop
+const usersWithPosts = await Promise.all(
+  users.map(async (user) => ({
+    ...user,
+    posts: await fetchPosts(user.id), // Query per user
+  })),
+);
+
+// ✅ Batch query
+const allPosts = await fetchPostsForUsers(users.map((u) => u.id));
+const usersWithPosts = users.map((user) => ({
+  ...user,
+  posts: allPosts.filter((p) => p.userId === user.id),
+}));
+```
+
+## How to Give Feedback
+
+The way you communicate matters as much as what you say:
+
+| Instead of             | Try                                                |
+| ---------------------- | -------------------------------------------------- |
+| "This is wrong"        | "I think this might cause X because…"              |
+| "Why did you do this?" | "Could you help me understand the reasoning here?" |
+| "You should use…"      | "Consider using X because it offers Y benefit"     |
+
+## Review Checklist
+
+- [ ] Does the code do what it's supposed to?
+- [ ] Are edge cases handled?
+- [ ] Is error handling appropriate?
+- [ ] Are there tests for new functionality?
+- [ ] Is the code readable and maintainable?
+- [ ] Are there any security concerns?
+
+## Conclusion
+
+Great code reviews are a conversation, not a critique. They build trust, share knowledge, and ultimately lead to better software.
+
+> "Programs must be written for people to read, and only incidentally for machines to execute." — Harold Abelson

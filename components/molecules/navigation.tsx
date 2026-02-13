@@ -50,7 +50,7 @@ const NAV_ITEMS = [
     icon: IconUserCircle,
   },
   {
-    href: "/articles",
+    href: "/blog",
     label: "Reads",
     icon: IconBookmark,
   },
