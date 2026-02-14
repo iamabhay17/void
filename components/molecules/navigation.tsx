@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { ThemeToggler } from "../ui/theme-toggler";
 import { Link } from "next-view-transitions";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const Navigation = () => {
   return (
@@ -69,9 +70,11 @@ const NAV_ITEMS = [
 export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
   const router = useRouter();
   const pathname = usePathname();
+  const [activeTab, setActiveTab] = useState(pathname || "/home");
 
-  const setActiveTab = (to: string) => {
+  const handleActiveTab = (to: string) => {
     router.push(to);
+    setActiveTab(to);
   };
   return (
     <div
@@ -81,11 +84,11 @@ export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
       )}
     >
       {NAV_ITEMS.map((tab) => {
-        const isActive = pathname === tab.href;
+        const isActive = activeTab === tab.href;
         return (
           <button
             key={tab.href}
-            onClick={() => setActiveTab(tab.href)}
+            onClick={() => handleActiveTab(tab.href)}
             className={cn(
               `relative rounded-full text-xs font-medium transition focus-visible:outline-2`,
               isMobile ? "px-2.5 py-2" : "px-3 py-1.5",

@@ -5,11 +5,13 @@ import { ArrowLeft } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
 import { getAllBlogs, getBlogBySlug } from "@/lib/blog";
 import { formatDate } from "@/lib/date";
 import { mdxComponents } from "@/lib/mdx-components";
 import { Container } from "@/components/molecules/container";
 import * as Fade from "@/components/motion/fade";
+import { TableOfContents } from "@/components/molecules/toc";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -119,6 +121,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   mdxOptions: {
                     remarkPlugins: [remarkGfm],
                     rehypePlugins: [
+                      rehypeSlug,
                       [
                         rehypePrettyCode,
                         {
@@ -151,6 +154,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </footer>
           </Fade.Item>
         </article>
+        {/* TOC Sidebar */}
+        <aside className="hidden xl:block w-64 pl-10">
+          <TableOfContents />
+        </aside>
       </Container>
     </Fade.Container>
   );
