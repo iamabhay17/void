@@ -81,7 +81,7 @@ export function useMDXComponents(): MDXComponents {
     blockquote: ({ className, ...props }) => (
       <blockquote
         className={cn(
-          "relative mt-6 rounded-r-lg border-l-4 border-primary/60 bg-muted/40 py-4 pl-6 pr-4 text-sm italic text-muted-foreground shadow-sm",
+          "relative mt-6 rounded-r-lg border-l-4 rounded-l-sm border-primary/60 bg-muted py-4 pl-6 pr-4 text-sm italic text-muted-foreground",
           "[&>p]:mt-0 [&>p:not(:first-child)]:mt-3",
           "before:absolute before:left-3 before:top-3 before:text-2xl before:text-primary/30 before:content-['\\201C']",
           className,

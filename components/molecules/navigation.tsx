@@ -11,7 +11,7 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggler } from "../ui/theme-toggler";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname, useRouter } from "next/navigation";
 
 export const Navigation = () => {
