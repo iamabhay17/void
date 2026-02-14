@@ -7,7 +7,6 @@ import {
   IconBrandGithub,
   IconHome,
   IconPhoto,
-  IconUserCircle,
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggler } from "../ui/theme-toggler";
@@ -46,13 +45,8 @@ const NAV_ITEMS = [
     icon: IconHome,
   },
   {
-    href: "/about",
-    label: "About",
-    icon: IconUserCircle,
-  },
-  {
     href: "/blog",
-    label: "Reads",
+    label: "Blogs",
     icon: IconBookmark,
   },
   {
@@ -106,7 +100,7 @@ export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
                   isMobile ? "bg-primary" : "bg-primary mix-blend-difference",
                 )}
                 style={{ borderRadius: 9999 }}
-                transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
               />
             )}
             {isMobile ? (

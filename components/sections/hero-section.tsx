@@ -5,15 +5,10 @@ import * as Fade from "@/components/motion/fade";
 export const HeroSection = () => {
   return (
     <header className="mb-20 mt-8">
-      <div className="mb-8">
+      <div className="mb-6">
         <Fade.Item>
-          <p className="text-base font-medium text-muted-foreground mb-2">
-            Hello 👋
-          </p>
-        </Fade.Item>
-        <Fade.Item>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight text-pretty">
-            I&apos;m Abhay Bhardwaj
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground text-pretty mb-4">
+            Hello, I&apos;m Abhay Bhardwaj
           </h1>
         </Fade.Item>
       </div>
