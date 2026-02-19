@@ -58,7 +58,7 @@ export const SkillIcon = ({ name, icon }: { name: string; icon: any }) => {
   return (
     <svg
       viewBox="0 0 40 40"
-      className="w-10 h-10 text-neutral-700 dark:text-neutral-100"
+      className="w-6 h-6 lg:w-10 lg:h-10 text-neutral-700 dark:text-neutral-100"
       fill="currentColor"
       dangerouslySetInnerHTML={{
         __html: icon.svg.replace(/fill="[^"]*"/g, 'fill="currentColor"'),

@@ -1,13 +1,9 @@
 "use client";
 
 import { SkillIcon, skills } from "@/data/skills";
-import { motion } from "framer-motion";
-import { useState } from "react";
 import * as Fade from "@/components/motion/fade";
 
 export function SkillsSection() {
-  const [isPaused, setIsPaused] = useState(false);
-
   return (
     <section className="mt-20">
       <Fade.Item>
@@ -19,39 +15,17 @@ export function SkillsSection() {
         </div>
       </Fade.Item>
       <Fade.Item>
-        <div
-          className="relative overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+        <div className="group relative overflow-hidden">
           {/* Left blur gradient */}
           <div className="absolute left-0 top-0 bottom-0 w-16 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
           {/* Right blur gradient */}
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 
-          <motion.div
-            className="flex gap-20"
-            animate={{
-              x: ["0%", "-50%"],
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 20,
-                ease: "linear",
-              },
-            }}
-            style={{
-              animationPlayState: isPaused ? "paused" : "running",
-            }}
-            onHoverStart={() => setIsPaused(true)}
-            onHoverEnd={() => setIsPaused(false)}
-          >
+          <div className="flex w-max animate-scroll group-hover:[animation-play-state:paused]">
             {[...skills, ...skills].map((skill, index) => (
               <div
                 key={`${skill.name}-${index}`}
-                className="flex flex-col items-center gap-2 shrink-0"
+                className="flex flex-col items-center gap-2 shrink-0 mx-5 md:mx-10"
               >
                 <SkillIcon name={skill.name} icon={skill.icon} />
                 <span className="text-xs text-muted-foreground">
@@ -59,7 +33,7 @@ export function SkillsSection() {
                 </span>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </Fade.Item>
     </section>
