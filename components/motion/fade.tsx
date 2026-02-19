@@ -1,22 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const container = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.05,
+      staggerChildren: 0.08,
       delayChildren: 0.2,
     },
   },
 };
 
-const item = {
+const item: Variants = {
   hidden: {
     opacity: 0,
     y: 16,
-    filter: "blur(4px)",
+    filter: "blur(8px)",
   },
   show: {
     opacity: 1,
@@ -24,7 +24,7 @@ const item = {
     y: 0,
     filter: "blur(0px)",
     transition: {
-      type: "spring",
+      type: "decay",
       stiffness: 150,
       damping: 19,
       mass: 1.2,
@@ -46,7 +46,7 @@ function Container({ children, className }: React.HTMLProps<HTMLDivElement>) {
 }
 
 function Item({ children }: { children: React.ReactNode }) {
-  return <motion.div variants={item as any}>{children}</motion.div>;
+  return <motion.div variants={item}>{children}</motion.div>;
 }
 
 export { Container, Item };

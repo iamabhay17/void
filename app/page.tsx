@@ -5,6 +5,7 @@ import { GithubSection } from "@/components/sections/github-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { SocialsSection } from "@/components/sections/socials-section";
 import * as Fade from "@/components/motion/fade";
+import { SkillsSection } from "@/components/sections/skills-section";
 
 export const Homepage = () => {
   return (
@@ -12,6 +13,7 @@ export const Homepage = () => {
       <Fade.Container>
         <HeroSection />
         <ExperienceSection />
+        <SkillsSection />
         <GithubSection />
         <BlogsSection />
         <SocialsSection />
