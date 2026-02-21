@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Link } from "next-view-transitions";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getPaginatedBlogs } from "@/lib/blog";
-import { formatDate } from "@/lib/date";
 import { Container } from "@/components/molecules/container";
 import { Badge } from "@/components/ui/badge";
+import { BlogCard } from "@/components/ui/blog-card";
 import * as Fade from "@/components/motion/fade";
 
 export const metadata: Metadata = {
@@ -67,36 +67,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               </p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-4">
               {blogs.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group block -mx-4 px-4 py-5 rounded-lg hover:bg-accent/50 transition-colors"
-                >
-                  <Fade.Item>
-                    <article className="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-1 md:gap-12">
-                      <span className="text-xs font-medium md:text-sm tabular-nums text-muted-foreground">
-                        {formatDate(post.date)}
-                      </span>
-                      <div className="space-y-1.5">
-                        <h3 className="text-sm lg:text-base font-semibold text-foreground inline-flex items-center gap-1.5 group-hover:text-primary transition-colors">
-                          <span className="text-pretty">{post.title}</span>
-                          <ArrowUpRight
-                            className="size-4 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                            aria-hidden="true"
-                          />
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                          {post.description}
-                        </p>
-                        <span className="text-xs text-muted-foreground/70">
-                          {post.readingTime}
-                        </span>
-                      </div>
-                    </article>
-                  </Fade.Item>
-                </Link>
+                <Fade.Item key={post.slug}>
+                  <BlogCard post={post} showReadingTime />
+                </Fade.Item>
               ))}
             </div>
           )}
