@@ -70,55 +70,71 @@ export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
     router.push(to);
     setActiveTab(to);
   };
+
+  if (isMobile) {
+    return (
+      <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full border border-border/50 bg-background/90 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20">
+        {NAV_ITEMS.map((tab) => {
+          const isActive = activeTab === tab.href;
+          return (
+            <button
+              key={tab.href}
+              onClick={() => handleActiveTab(tab.href)}
+              className="relative p-2.5 rounded-full transition-colors"
+              style={{ WebkitTapHighlightColor: "transparent" }}
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="mobile-nav-pill"
+                  className="absolute inset-0 bg-foreground/10 rounded-full"
+                  transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                />
+              )}
+              <tab.icon
+                className={cn(
+                  "relative z-10 transition-colors",
+                  isActive ? "text-foreground" : "text-muted-foreground",
+                )}
+                stroke={isActive ? 2 : 1.5}
+                size={18}
+              />
+            </button>
+          );
+        })}
+        <span className="w-px h-4 bg-border mx-0.5" />
+        <ThemeToggler
+          className="p-2.5 rounded-full text-muted-foreground hover:text-foreground transition-colors"
+          iconSize={18}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={cn(
-        "flex space-x-1",
-        isMobile && "space-x-2 border rounded-full p-1 bg-card",
-      )}
-    >
+    <div className="flex space-x-1">
       {NAV_ITEMS.map((tab) => {
         const isActive = activeTab === tab.href;
         return (
           <button
             key={tab.href}
             onClick={() => handleActiveTab(tab.href)}
-            className={cn(
-              `relative rounded-full text-xs font-medium transition focus-visible:outline-2`,
-              isMobile ? "px-2.5 py-2" : "px-3 py-1.5",
-            )}
-            style={{
-              WebkitTapHighlightColor: "transparent",
-            }}
+            className="relative rounded-full text-xs font-medium transition focus-visible:outline-2 px-3 py-1.5"
+            style={{ WebkitTapHighlightColor: "transparent" }}
           >
             {isActive && (
               <motion.span
-                layoutId={isMobile ? "bubble-mobile" : "bubble-desktop"}
+                layoutId="bubble-desktop"
                 layout
-                className={cn(
-                  "absolute inset-0 z-10",
-                  isMobile ? "bg-primary" : "bg-primary mix-blend-difference",
-                )}
+                className="absolute inset-0 z-10 bg-primary mix-blend-difference"
                 style={{ borderRadius: 9999 }}
                 transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
               />
             )}
-            {isMobile ? (
-              <tab.icon
-                className={cn(
-                  "relative z-20 text-primary",
-                  isActive && "text-primary-foreground",
-                )}
-                stroke={1.5}
-                size={20}
-              />
-            ) : (
-              tab.label
-            )}
+            {tab.label}
           </button>
         );
       })}
-      <ThemeToggler className={cn(isMobile ? "px-2.5 py-2" : "px-3 py-1.5")} />
+      <ThemeToggler className="px-3 py-1.5" />
     </div>
   );
 }

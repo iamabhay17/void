@@ -61,7 +61,7 @@ export default function RootLayout({
           <div className="relative bg-background">
             <Navigation />
             {children}
-            <div className="fixed bottom-4 left-0 right-0 md:hidden flex justify-center z-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="fixed bottom-5 left-1/2 -translate-x-1/2 md:hidden z-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <NavDock isMobile={true} />
             </div>
           </div>
