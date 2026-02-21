@@ -14,29 +14,39 @@ import { Link } from "next-view-transitions";
 import { usePathname, useRouter } from "next/navigation";
 import { memo, useCallback, useMemo } from "react";
 
-export const Navigation = () => {
+export const Navigation = memo(function Navigation() {
   return (
-    <Container className="py-6">
-      <div className="flex justify-between items-center">
-        <SiteHeading />
-        <span className="hidden md:inline-block">
-          <NavDock isMobile={false} />
-        </span>
-      </div>
-    </Container>
+    <motion.header
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <Container className="py-6">
+        <div className="flex justify-between items-center">
+          <SiteHeading />
+          <nav className="hidden md:block">
+            <NavDock isMobile={false} />
+          </nav>
+        </div>
+      </Container>
+    </motion.header>
   );
-};
+});
 
-const SiteHeading = () => {
+const SiteHeading = memo(function SiteHeading() {
   return (
-    <Link href="/">
-      <h3 className="text-xs lg:text-sm text-muted-foreground">
-        <span className="font-medium text-primary">Abhay Bhardwaj </span>
-        <span className="">— Design Engineer</span>
+    <Link href="/" className="group">
+      <h3 className="text-xs lg:text-sm text-muted-foreground transition-colors duration-200">
+        <span className="font-medium text-primary group-hover:text-primary/80 transition-colors duration-200">
+          Abhay Bhardwaj{" "}
+        </span>
+        <span className="group-hover:text-foreground transition-colors duration-200">
+          — Design Engineer
+        </span>
       </h3>
     </Link>
   );
-};
+});
 
 const NAV_ITEMS = [
   {
@@ -128,35 +138,41 @@ export const NavDock = memo(function NavDock({
   }
 
   return (
-    <nav className="flex space-x-1">
+    <nav className="flex items-center gap-0.5 p-1 rounded-full border border-border/30 bg-card/50 backdrop-blur-sm">
       {NAV_ITEMS.map((tab) => {
         const isActive = pathname === tab.href;
         return (
           <button
             key={tab.href}
             onClick={() => handleActiveTab(tab.href)}
-            className="relative rounded-full text-xs font-medium transition-colors duration-150 focus-visible:outline-2 px-3 py-1.5"
+            className={cn(
+              "relative rounded-full text-xs font-medium px-3 py-1.5 transition-colors duration-200",
+              "focus-visible:outline-2 focus-visible:outline-primary",
+              isActive ? "text-primary-foreground" : "text-muted-foreground",
+            )}
             style={{ WebkitTapHighlightColor: "transparent" }}
             aria-current={isActive ? "page" : undefined}
           >
             {isActive && (
               <motion.span
-                layoutId="bubble-desktop"
-                layout
-                className="absolute inset-0 z-10 bg-primary mix-blend-difference"
-                style={{ borderRadius: 9999 }}
+                layoutId="desktop-nav-pill"
+                className="absolute inset-0 bg-primary rounded-full"
                 transition={
                   prefersReducedMotion
                     ? { duration: 0 }
-                    : { type: "spring", bounce: 0.2, duration: 0.3 }
+                    : { type: "spring", stiffness: 400, damping: 30 }
                 }
               />
             )}
-            {tab.label}
+            <span className="relative z-10">{tab.label}</span>
           </button>
         );
       })}
-      <ThemeToggler className="px-3 py-1.5" />
+      <span className="w-px h-4 bg-border/50 mx-1" aria-hidden="true" />
+      <ThemeToggler
+        className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
+        iconSize={16}
+      />
     </nav>
   );
 });
