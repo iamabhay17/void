@@ -1,20 +1,19 @@
-import { flushSync } from "react-dom";
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 
-interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
-  duration?: number;
+interface ThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
+  iconSize?: number;
 }
 
 export const ThemeToggler = ({
   className,
-  duration = 400,
+  iconSize = 18,
   ...props
-}: AnimatedThemeTogglerProps) => {
+}: ThemeTogglerProps) => {
   const [isDark, setIsDark] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const updateTheme = () => {
@@ -32,53 +31,19 @@ export const ThemeToggler = ({
     return () => observer.disconnect();
   }, []);
 
-  const toggleTheme = useCallback(async () => {
-    if (!buttonRef.current) return;
-
-    await document.startViewTransition(() => {
-      flushSync(() => {
-        const newTheme = !isDark;
-        setIsDark(newTheme);
-        document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", newTheme ? "dark" : "light");
-      });
-    }).ready;
-
-    const { top, left, width, height } =
-      buttonRef.current.getBoundingClientRect();
-    const x = left + width / 2;
-    const y = top + height / 2;
-    const maxRadius = Math.hypot(
-      Math.max(left, window.innerWidth - left),
-      Math.max(top, window.innerHeight - top),
-    );
-
-    document.documentElement.animate(
-      {
-        clipPath: [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${maxRadius}px at ${x}px ${y}px)`,
-        ],
-      },
-      {
-        duration,
-        easing: "ease-in-out",
-        pseudoElement: "::view-transition-new(root)",
-      },
-    );
-  }, [isDark, duration]);
+  const toggleTheme = () => {
+    const newTheme = !isDark;
+    setIsDark(newTheme);
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
+  };
 
   return (
-    <button
-      ref={buttonRef}
-      onClick={toggleTheme}
-      className={cn(className)}
-      {...props}
-    >
+    <button onClick={toggleTheme} className={cn(className)} {...props}>
       {isDark ? (
-        <IconSun size={20} stroke={1.5} />
+        <IconSun size={iconSize} stroke={1.5} />
       ) : (
-        <IconMoon size={20} stroke={1.5} />
+        <IconMoon size={iconSize} stroke={1.5} />
       )}
       <span className="sr-only">Toggle theme</span>
     </button>

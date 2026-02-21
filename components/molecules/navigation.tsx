@@ -102,10 +102,7 @@ export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
           );
         })}
         <span className="w-px h-4 bg-border mx-0.5" />
-        <ThemeToggler
-          className="p-2.5 rounded-full text-muted-foreground hover:text-foreground transition-colors"
-          iconSize={18}
-        />
+        <ThemeToggler className="p-2.5 rounded-full text-muted-foreground hover:text-foreground transition-colors" />
       </div>
     );
   }
