@@ -65,15 +65,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <Fade.Container>
-      <Container className="mb-30">
-        <article className="mt-8">
+      <Container className="pb-32">
+        <article className="mt-4">
           {/* Back Button */}
           <Fade.Item>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-8"
+              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-8 group"
             >
-              <ArrowLeft className="size-3.5" aria-hidden="true" />
+              <ArrowLeft
+                className="size-3.5 group-hover:-translate-x-0.5 transition-transform"
+                aria-hidden="true"
+              />
               Back to Blog
             </Link>
           </Fade.Item>
@@ -81,23 +84,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Header */}
           <header className="mb-12">
             <Fade.Item>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
-                <time dateTime={post.date} className="tabular-nums font-medium">
+              <div className="flex flex-wrap items-center gap-2 mb-6">
+                <span className="text-xs tabular-nums font-medium text-muted-foreground bg-muted/50 px-2 py-0.5 rounded">
                   {formatDate(post.date)}
-                </time>
-                <span aria-hidden="true">·</span>
-                <span>{post.readingTime}</span>
+                </span>
+                <span className="text-xs text-muted-foreground bg-muted/50 px-2 py-0.5 rounded">
+                  {post.readingTime}
+                </span>
               </div>
             </Fade.Item>
             <Fade.Item>
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground text-pretty mb-4">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground text-pretty mb-6">
                 {post.title}
               </h1>
-              <Fade.Item>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
-                  {post.description}
-                </p>
-              </Fade.Item>
+            </Fade.Item>
+            <Fade.Item>
+              <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
+                {post.description}
+              </p>
             </Fade.Item>
           </header>
 

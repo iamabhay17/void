@@ -80,35 +80,43 @@ export const TableOfContents = () => {
   if (!headings.length) return null;
   return (
     <motion.nav
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0, x: 10 }}
+      animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-      className={cn("hidden xl:block fixed right-24 top-30 w-56", "space-y-4")}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="hidden xl:block fixed right-24 top-28 w-56"
     >
-      <div className="flex flex-col text-sm">
-        {headings.map((heading) => (
-          <button
-            key={heading.id}
-            onClick={() => scrollToHeading(heading.id)}
-            className={cn(
-              "text-left transition-colors duration-200",
-              "border-l-2 py-1",
-              "hover:text-foreground",
-              {
-                "font-medium text-foreground border-foreground":
-                  activeId === heading.id,
-                "text-muted-foreground border-transparent":
-                  activeId !== heading.id,
-                "pl-3": heading.level === 1,
-                "pl-6": heading.level === 2,
-                "pl-9": heading.level === 3,
-              },
-            )}
-          >
-            {heading.text}
-          </button>
-        ))}
+      <div className="rounded-lg border border-border/50 bg-card/50 backdrop-blur-sm p-4">
+        <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground mb-4">
+          On this page
+        </h4>
+        <div className="flex flex-col gap-0.5">
+          {headings.map((heading) => (
+            <button
+              key={heading.id}
+              onClick={() => scrollToHeading(heading.id)}
+              className={cn(
+                "text-left text-[13px] transition-all duration-200 rounded-md py-1.5 relative",
+                "hover:text-foreground hover:bg-accent/50",
+                activeId === heading.id
+                  ? "font-medium text-foreground bg-accent/30"
+                  : "text-muted-foreground",
+                heading.level === 1 && "pl-3",
+                heading.level === 2 && "pl-3",
+                heading.level === 3 && "pl-6",
+              )}
+            >
+              {activeId === heading.id && (
+                <motion.span
+                  layoutId="toc-active-indicator"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-foreground rounded-full"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="line-clamp-1">{heading.text}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </motion.nav>
   );
