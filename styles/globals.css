@@ -243,3 +243,22 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+/* Custom animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Gradient conic utility */
+.bg-gradient-conic {
+  background: conic-gradient(var(--tw-gradient-stops));
+}

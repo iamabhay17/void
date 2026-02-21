@@ -35,7 +35,7 @@ export function GitHubContributionGraph({
       className="py-2"
       data={data}
       blockSize={isMobile ? 12 : 16}
-      blockMargin={isMobile ? 4 : 3}
+      blockMargin={isMobile ? 4 : 5}
       blockRadius={2}
     >
       <ContributionGraphCalendar
