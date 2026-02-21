@@ -1,8 +1,9 @@
 import "@/styles/globals.css";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter, Shantell_Sans } from "next/font/google";
-import { NavDock, Navigation } from "@/components/molecules/navigation";
+import { Navigation } from "@/components/molecules/navigation";
 import { Providers } from "@/components/molecules/providers";
+import { MobileNavWrapper } from "@/components/molecules/mobile-nav-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,9 +62,7 @@ export default function RootLayout({
           <div className="relative bg-background">
             <Navigation />
             {children}
-            <div className="fixed bottom-5 left-1/2 -translate-x-1/2 md:hidden z-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <NavDock isMobile={true} />
-            </div>
+            <MobileNavWrapper />
           </div>
         </Providers>
       </body>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Container } from "./container";
 import {
   IconBookmark,
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { ThemeToggler } from "../ui/theme-toggler";
 import { Link } from "next-view-transitions";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { memo, useCallback, useMemo } from "react";
 
 export const Navigation = () => {
   return (
@@ -61,38 +61,55 @@ const NAV_ITEMS = [
   },
 ];
 
-export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
+export const NavDock = memo(function NavDock({
+  isMobile = false,
+}: {
+  isMobile?: boolean;
+}) {
   const router = useRouter();
   const pathname = usePathname();
-  const [activeTab, setActiveTab] = useState(pathname || "/home");
+  const prefersReducedMotion = useReducedMotion();
 
-  const handleActiveTab = (to: string) => {
-    router.push(to);
-    setActiveTab(to);
-  };
+  const handleActiveTab = useCallback(
+    (to: string) => {
+      router.push(to);
+    },
+    [router],
+  );
+
+  const springTransition = useMemo(
+    () =>
+      prefersReducedMotion
+        ? { duration: 0 }
+        : { type: "spring" as const, stiffness: 500, damping: 35 },
+    [prefersReducedMotion],
+  );
 
   if (isMobile) {
     return (
-      <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full border border-border/50 bg-background/90 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20">
+      <nav className="flex items-center gap-1 px-1.5 py-1.5 rounded-full border border-border/50 bg-background/95 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20 will-change-transform">
         {NAV_ITEMS.map((tab) => {
-          const isActive = activeTab === tab.href;
+          const isActive = pathname === tab.href;
+          const Icon = tab.icon;
           return (
             <button
               key={tab.href}
               onClick={() => handleActiveTab(tab.href)}
-              className="relative p-2.5 rounded-full transition-colors"
+              className="relative p-2.5 rounded-full active:scale-95 transition-transform"
               style={{ WebkitTapHighlightColor: "transparent" }}
+              aria-label={tab.label}
+              aria-current={isActive ? "page" : undefined}
             >
               {isActive && (
                 <motion.span
                   layoutId="mobile-nav-pill"
                   className="absolute inset-0 bg-foreground/10 rounded-full"
-                  transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                  transition={springTransition}
                 />
               )}
-              <tab.icon
+              <Icon
                 className={cn(
-                  "relative z-10 transition-colors",
+                  "relative z-10 transition-colors duration-150",
                   isActive ? "text-foreground" : "text-muted-foreground",
                 )}
                 stroke={isActive ? 2 : 1.5}
@@ -101,22 +118,26 @@ export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
             </button>
           );
         })}
-        <span className="w-px h-4 bg-border mx-0.5" />
-        <ThemeToggler className="p-2.5 rounded-full text-muted-foreground hover:text-foreground transition-colors" />
-      </div>
+        <span className="w-px h-4 bg-border mx-0.5" aria-hidden="true" />
+        <ThemeToggler
+          className="p-2.5 rounded-full text-muted-foreground hover:text-foreground active:scale-95 transition-all duration-150"
+          iconSize={18}
+        />
+      </nav>
     );
   }
 
   return (
-    <div className="flex space-x-1">
+    <nav className="flex space-x-1">
       {NAV_ITEMS.map((tab) => {
-        const isActive = activeTab === tab.href;
+        const isActive = pathname === tab.href;
         return (
           <button
             key={tab.href}
             onClick={() => handleActiveTab(tab.href)}
-            className="relative rounded-full text-xs font-medium transition focus-visible:outline-2 px-3 py-1.5"
+            className="relative rounded-full text-xs font-medium transition-colors duration-150 focus-visible:outline-2 px-3 py-1.5"
             style={{ WebkitTapHighlightColor: "transparent" }}
+            aria-current={isActive ? "page" : undefined}
           >
             {isActive && (
               <motion.span
@@ -124,7 +145,11 @@ export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
                 layout
                 className="absolute inset-0 z-10 bg-primary mix-blend-difference"
                 style={{ borderRadius: 9999 }}
-                transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0 }
+                    : { type: "spring", bounce: 0.2, duration: 0.3 }
+                }
               />
             )}
             {tab.label}
@@ -132,6 +157,6 @@ export function NavDock({ isMobile = false }: { isMobile?: boolean }) {
         );
       })}
       <ThemeToggler className="px-3 py-1.5" />
-    </div>
+    </nav>
   );
-}
+});

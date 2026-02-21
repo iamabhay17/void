@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { List, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 type Heading = {
@@ -10,7 +11,7 @@ type Heading = {
   level: number;
 };
 
-export const TableOfContents = () => {
+const useTocHeadings = () => {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -34,7 +35,6 @@ export const TableOfContents = () => {
     collectHeadings();
   }, []);
 
-  // 2️⃣ Observe which heading is active
   useEffect(() => {
     if (!headings.length) return;
 
@@ -66,16 +66,22 @@ export const TableOfContents = () => {
     return () => observer.disconnect();
   }, [headings]);
 
-  // 3️⃣ Smooth scroll
   const scrollToHeading = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
 
-    const yOffset = -90; // adjust if you have sticky header
+    const yOffset = -90;
     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
     window.scrollTo({ top: y, behavior: "smooth" });
   };
+
+  return { headings, activeId, scrollToHeading };
+};
+
+// Desktop TOC - Fixed sidebar
+export const TableOfContents = () => {
+  const { headings, activeId, scrollToHeading } = useTocHeadings();
 
   if (!headings.length) return null;
   return (
@@ -119,5 +125,112 @@ export const TableOfContents = () => {
         </div>
       </div>
     </motion.nav>
+  );
+};
+
+// Mobile TOC - Floating button with sheet
+export const MobileTableOfContents = () => {
+  const { headings, activeId, scrollToHeading } = useTocHeadings();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleNavigate = (id: string) => {
+    scrollToHeading(id);
+    setIsOpen(false);
+  };
+
+  if (!headings.length) return null;
+
+  return (
+    <>
+      {/* Floating TOC Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.5 }}
+        onClick={() => setIsOpen(true)}
+        className="xl:hidden fixed bottom-20 right-4 z-40 flex items-center gap-2 px-3 py-2 rounded-full border border-border/50 bg-background/90 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20"
+      >
+        <List className="size-4 text-muted-foreground" />
+        <span className="text-xs font-medium text-muted-foreground">
+          Contents
+        </span>
+      </motion.button>
+
+      {/* Sheet Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="xl:hidden fixed inset-0 z-50 bg-background/80 backdrop-blur-sm"
+            />
+
+            {/* Sheet */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="xl:hidden fixed bottom-0 left-0 right-0 z-50 max-h-[70vh] rounded-t-2xl border-t border-border bg-background shadow-xl"
+            >
+              {/* Handle */}
+              <div className="flex justify-center py-3">
+                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+              </div>
+
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 pb-3 border-b border-border">
+                <h4 className="text-sm font-semibold text-foreground">
+                  On this page
+                </h4>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 rounded-md hover:bg-accent transition-colors"
+                >
+                  <X className="size-4 text-muted-foreground" />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="overflow-y-auto max-h-[calc(70vh-80px)] p-4">
+                <div className="flex flex-col gap-1">
+                  {headings.map((heading) => (
+                    <button
+                      key={heading.id}
+                      onClick={() => handleNavigate(heading.id)}
+                      className={cn(
+                        "text-left text-sm transition-all duration-200 rounded-lg py-2.5 px-3 relative",
+                        "active:scale-[0.98]",
+                        activeId === heading.id
+                          ? "font-medium text-foreground bg-accent"
+                          : "text-muted-foreground hover:bg-accent/50",
+                        heading.level === 3 && "ml-4",
+                      )}
+                    >
+                      {activeId === heading.id && (
+                        <motion.span
+                          layoutId="mobile-toc-indicator"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-foreground rounded-full"
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 30,
+                          }}
+                        />
+                      )}
+                      <span className="line-clamp-2">{heading.text}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

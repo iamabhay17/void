@@ -11,7 +11,10 @@ import { formatDate } from "@/lib/date";
 import { mdxComponents } from "@/lib/mdx-components";
 import { Container } from "@/components/molecules/container";
 import * as Fade from "@/components/motion/fade";
-import { TableOfContents } from "@/components/molecules/toc";
+import {
+  TableOfContents,
+  MobileTableOfContents,
+} from "@/components/molecules/toc";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -158,10 +161,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </footer>
           </Fade.Item>
         </article>
-        {/* TOC Sidebar */}
+        {/* TOC Sidebar - Desktop */}
         <aside className="hidden xl:block w-64 pl-10">
           <TableOfContents />
         </aside>
+        {/* TOC - Mobile */}
+        <MobileTableOfContents />
       </Container>
     </Fade.Container>
   );
