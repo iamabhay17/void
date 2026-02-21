@@ -19,7 +19,7 @@ export function BlogCard({ post, showReadingTime = false }: BlogCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group block rounded-md border border-border bg-card p-4 sm:p-5 hover:border-primary/30 hover:bg-accent/30 transition-all duration-200"
+      className="group block rounded-lg border border-border bg-card p-4 sm:p-5 hover:bg-accent hover:border-accent transition-all"
     >
       <article className="flex flex-col gap-3">
         <div className="flex items-center justify-between gap-4">

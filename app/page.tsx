@@ -12,9 +12,9 @@ export const Homepage = () => {
     <Container className="mb-30">
       <Fade.Container>
         <HeroSection />
+        <GithubSection />
         <ExperienceSection />
         <SkillsSection />
-        <GithubSection />
         <BlogsSection />
         <SocialsSection />
       </Fade.Container>

@@ -32,14 +32,13 @@ export function GitHubContributionGraph({
 
   return (
     <ContributionGraph
-      className="py-2"
       data={data}
-      blockSize={isMobile ? 12 : 16}
-      blockMargin={isMobile ? 4 : 5}
+      blockSize={isMobile ? 12 : 14}
+      blockMargin={isMobile ? 4 : 4}
       blockRadius={2}
     >
       <ContributionGraphCalendar
-        className="no-scrollbar px-2"
+        className="no-scrollbar"
         title="GitHub Contributions"
       >
         {({ activity, dayIndex, weekIndex }) => (
@@ -69,7 +68,7 @@ export function GitHubContributionGraph({
         )}
       </ContributionGraphCalendar>
 
-      <ContributionGraphFooter className="px-2">
+      <ContributionGraphFooter>
         <ContributionGraphTotalCount>
           {({ totalCount, year }) => (
             <div
@@ -78,16 +77,7 @@ export function GitHubContributionGraph({
                 isMobile ? "text-xs" : "text-sm",
               )}
             >
-              {totalCount.toLocaleString("en")} contributions in {year} on{" "}
-              <a
-                className="font-medium underline underline-offset-4"
-                href={`https://github.com/iamabhay17`}
-                target="_blank"
-                rel="noopener"
-              >
-                GitHub
-              </a>
-              .
+              {totalCount.toLocaleString("en")} contributions in {year}
             </div>
           )}
         </ContributionGraphTotalCount>
