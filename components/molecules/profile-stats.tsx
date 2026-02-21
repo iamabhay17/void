@@ -67,7 +67,7 @@ export const ProfileStats = () => {
           key={stat.label}
           className="flex flex-col items-center gap-0.5 py-4"
         >
-          <span className="text-xl font-bold text-foreground sm:text-2xl">
+          <span className="text-lg md:text-xl font-bold text-foreground sm:text-2xl">
             {stat.value}
           </span>
           <span className="text-xs font-medium text-muted-foreground sm:text-sm">

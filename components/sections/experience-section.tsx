@@ -4,7 +4,7 @@ import { experiences } from "@/data/experience";
 
 export const ExperienceSection = () => {
   return (
-    <section className="mt-20">
+    <section>
       <Fade.Item>
         <div className="flex items-center gap-4 mb-10">
           <h2 className="text-xs lg:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">

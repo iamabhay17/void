@@ -9,10 +9,12 @@ import { SkillsSection } from "@/components/sections/skills-section";
 
 export const Homepage = () => {
   return (
-    <Container className="mb-30">
-      <Fade.Container>
-        <HeroSection />
-        <GithubSection />
+    <Container className="pb-32">
+      <Fade.Container className="space-y-16 lg:space-y-20">
+        <div className="space-y-4">
+          <HeroSection />
+          <GithubSection />
+        </div>
         <ExperienceSection />
         <SkillsSection />
         <BlogsSection />

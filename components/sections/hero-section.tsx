@@ -7,6 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ISTTime } from "../molecules/time";
 import { ProfileStats } from "../molecules/profile-stats";
+import * as Fade from "@/components/motion/fade";
 
 const PROFILE = {
   name: "Abhay Bhardwaj",
@@ -107,17 +108,19 @@ const ProfileInfo = () => (
 );
 
 export const HeroSection = () => (
-  <header className="w-full overflow-hidden rounded-md border border-border bg-card mb-10">
-    <ProfileBanner />
-    <div className="pt-2">
-      <ProfileHeader />
-    </div>
-    <div className="mt-4">
-      <ProfileInfo />
-    </div>
-    <div className="mt-6 px-4 sm:px-6 md:px-8">
-      <Separator />
-    </div>
-    <ProfileStats />
-  </header>
+  <Fade.Item>
+    <header className="w-full overflow-hidden rounded-md border border-border bg-card">
+      <ProfileBanner />
+      <div className="pt-2">
+        <ProfileHeader />
+      </div>
+      <div className="mt-4">
+        <ProfileInfo />
+      </div>
+      <div className="mt-6 px-4 sm:px-6 md:px-8">
+        <Separator />
+      </div>
+      <ProfileStats />
+    </header>
+  </Fade.Item>
 );

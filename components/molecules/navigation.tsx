@@ -16,7 +16,7 @@ import { useState } from "react";
 
 export const Navigation = () => {
   return (
-    <Container>
+    <Container className="py-6">
       <div className="flex justify-between items-center">
         <SiteHeading />
         <span className="hidden md:inline-block">
