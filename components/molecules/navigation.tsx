@@ -9,6 +9,7 @@ import {
   IconPhoto,
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
+import { haptic } from "@/lib/haptic";
 import { ThemeToggler } from "../ui/theme-toggler";
 import { Link } from "next-view-transitions";
 import { usePathname, useRouter } from "next/navigation";
@@ -82,6 +83,7 @@ export const NavDock = memo(function NavDock({
 
   const handleActiveTab = useCallback(
     (to: string) => {
+      haptic();
       router.push(to);
     },
     [router],

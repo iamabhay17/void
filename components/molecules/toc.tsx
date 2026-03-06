@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { haptic } from "@/lib/haptic";
 import { AnimatePresence, motion } from "framer-motion";
 import { List, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -134,6 +135,7 @@ export const MobileTableOfContents = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleNavigate = (id: string) => {
+    haptic();
     scrollToHeading(id);
     setIsOpen(false);
   };
@@ -147,7 +149,10 @@ export const MobileTableOfContents = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          haptic();
+          setIsOpen(true);
+        }}
         className="xl:hidden fixed bottom-20 right-4 z-40 flex items-center gap-2 px-3 py-2 rounded-full border border-border bg-background/95 backdrop-blur-sm shadow-sm"
       >
         <List className="size-4 text-muted-foreground" />

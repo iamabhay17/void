@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { haptic } from "@/lib/haptic";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 
 interface ThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
@@ -32,6 +33,7 @@ export const ThemeToggler = ({
   }, []);
 
   const toggleTheme = () => {
+    haptic();
     const newTheme = !isDark;
     setIsDark(newTheme);
     document.documentElement.classList.toggle("dark");
