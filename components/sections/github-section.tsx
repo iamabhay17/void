@@ -21,7 +21,7 @@ export function GithubSection() {
               href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-150"
             >
               @iamabhay17
             </Link>

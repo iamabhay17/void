@@ -21,7 +21,7 @@ export function SkillsSection() {
           {/* Right blur gradient */}
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 
-          <div className="flex w-max animate-scroll group-hover:[animation-play-state:paused]">
+          <div className="flex w-max animate-scroll group-hover:paused">
             {[...skills, ...skills].map((skill, index) => (
               <div
                 key={`${skill.name}-${index}`}

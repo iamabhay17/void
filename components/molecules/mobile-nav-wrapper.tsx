@@ -45,17 +45,15 @@ export const MobileNavWrapper = memo(() => {
       initial={false}
       animate={{
         opacity: isVisible ? 1 : 0,
-        y: isVisible ? 0 : 16,
+        y: isVisible ? 0 : 8,
         pointerEvents: isVisible ? "auto" : "none",
       }}
       transition={
         prefersReducedMotion
           ? { duration: 0 }
           : {
-              type: "spring",
-              stiffness: 400,
-              damping: 30,
-              mass: 0.8,
+              duration: 0.2,
+              ease: [0.25, 0.1, 0.25, 1],
             }
       }
       className="fixed bottom-5 left-1/2 -translate-x-1/2 md:hidden z-50 will-change-transform"

@@ -33,7 +33,7 @@ export function BlogsSection() {
         <div className="mt-4 pt-4">
           <NextViewTransition
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors duration-150"
           >
             View all posts
             <ArrowUpRight className="size-3.5" aria-hidden="true" />

@@ -18,7 +18,7 @@ export const ExperienceSection = () => {
         {experiences.map((exp, index) => (
           <Fade.Item key={index}>
             <div
-              className={`group py-8 hover:bg-accent/50 transition-all -mx-2 px-2 ${index !== experiences.length - 1 ? "border-b border-border" : ""}`}
+              className={`group py-8 hover:bg-accent/30 transition-colors duration-150 -mx-2 px-2 rounded-lg ${index !== experiences.length - 1 ? "border-b border-border" : ""}`}
             >
               <div className="flex gap-4">
                 <div className="hidden lg:block shrink-0">
@@ -40,15 +40,15 @@ export const ExperienceSection = () => {
                       </h3>
                       <a
                         href={exp.companyUrl}
-                        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-150"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         {exp.company}
-                        <ArrowUpRight className="size-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ArrowUpRight className="size-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
                       </a>
                     </div>
-                    <span className="text-xs tabular-nums text-muted-foreground bg-muted/50 px-2 py-0.5 rounded w-fit">
+                    <span className="text-xs tabular-nums text-muted-foreground">
                       {exp.period}
                     </span>
                   </div>

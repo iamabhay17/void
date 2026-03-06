@@ -36,7 +36,7 @@ const ProfileBanner = () => (
 
 const ProfileAvatar = () => (
   <div className="relative -mt-14 sm:-mt-16">
-    <Avatar className="size-28 border-4 border-card shadow-md sm:size-32">
+    <Avatar className="size-28 border-4 border-card sm:size-32">
       <AvatarImage src={UserAvatar.src} alt={PROFILE.name} />
       <AvatarFallback className="bg-primary text-primary-foreground text-2xl font-semibold">
         {PROFILE.initials}

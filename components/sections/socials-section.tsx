@@ -18,10 +18,10 @@ export function SocialsSection() {
             href={social.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-3 px-6 py-4 rounded-lg border border-border bg-card hover:bg-accent hover:border-accent transition-all"
+            className="group flex items-center gap-3 px-6 py-4 rounded-lg border border-border bg-card hover:bg-accent/50 transition-colors duration-150"
             aria-label={social.name}
           >
-            <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+            <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-150">
               {social.icon}
             </span>
             <div className="flex flex-col min-w-0">

@@ -102,8 +102,8 @@ export const TableOfContents = () => {
               key={heading.id}
               onClick={() => scrollToHeading(heading.id)}
               className={cn(
-                "text-left text-[13px] transition-all duration-200 rounded-md py-1.5 relative",
-                "hover:text-foreground hover:bg-accent/50",
+                "text-left text-[13px] transition-colors duration-150 rounded-md py-1.5 relative",
+                "hover:text-foreground hover:bg-accent/30",
                 activeId === heading.id
                   ? "font-medium text-foreground bg-accent/30"
                   : "text-muted-foreground",
@@ -116,7 +116,7 @@ export const TableOfContents = () => {
                 <motion.span
                   layoutId="toc-active-indicator"
                   className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-foreground rounded-full"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                 />
               )}
               <span className="line-clamp-1">{heading.text}</span>
@@ -144,11 +144,11 @@ export const MobileTableOfContents = () => {
     <>
       {/* Floating TOC Button */}
       <motion.button
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
+        transition={{ delay: 0.3, duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
         onClick={() => setIsOpen(true)}
-        className="xl:hidden fixed bottom-20 right-4 z-40 flex items-center gap-2 px-3 py-2 rounded-full border border-border/50 bg-background/90 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20"
+        className="xl:hidden fixed bottom-20 right-4 z-40 flex items-center gap-2 px-3 py-2 rounded-full border border-border bg-background/95 backdrop-blur-sm shadow-sm"
       >
         <List className="size-4 text-muted-foreground" />
         <span className="text-xs font-medium text-muted-foreground">
@@ -174,8 +174,8 @@ export const MobileTableOfContents = () => {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="xl:hidden fixed bottom-0 left-0 right-0 z-50 max-h-[70vh] rounded-t-2xl border-t border-border bg-background shadow-xl"
+              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+              className="xl:hidden fixed bottom-0 left-0 right-0 z-50 max-h-[70vh] rounded-t-2xl border-t border-border bg-background shadow-lg"
             >
               {/* Handle */}
               <div className="flex justify-center py-3">
@@ -203,11 +203,11 @@ export const MobileTableOfContents = () => {
                       key={heading.id}
                       onClick={() => handleNavigate(heading.id)}
                       className={cn(
-                        "text-left text-sm transition-all duration-200 rounded-lg py-2.5 px-3 relative",
+                        "text-left text-sm transition-colors duration-150 rounded-lg py-2.5 px-3 relative",
                         "active:scale-[0.98]",
                         activeId === heading.id
                           ? "font-medium text-foreground bg-accent"
-                          : "text-muted-foreground hover:bg-accent/50",
+                          : "text-muted-foreground hover:bg-accent/30",
                         heading.level === 3 && "ml-4",
                       )}
                     >
@@ -216,9 +216,8 @@ export const MobileTableOfContents = () => {
                           layoutId="mobile-toc-indicator"
                           className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-foreground rounded-full"
                           transition={{
-                            type: "spring",
-                            stiffness: 400,
-                            damping: 30,
+                            duration: 0.15,
+                            ease: [0.25, 0.1, 0.25, 1],
                           }}
                         />
                       )}

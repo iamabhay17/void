@@ -6,8 +6,8 @@ const container = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2,
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
     },
   },
 };
@@ -15,19 +15,14 @@ const container = {
 const item: Variants = {
   hidden: {
     opacity: 0,
-    y: 16,
-    filter: "blur(8px)",
+    y: 8,
   },
   show: {
     opacity: 1,
-    scale: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: {
-      type: "decay",
-      stiffness: 150,
-      damping: 19,
-      mass: 1.2,
+      duration: 0.2,
+      ease: [0.25, 0.1, 0.25, 1],
     },
   },
 };

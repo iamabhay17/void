@@ -86,7 +86,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 {hasPrevPage ? (
                   <Link
                     href={`/blog?page=${page - 1}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-150"
                   >
                     <ArrowLeft className="size-3.5" aria-hidden="true" />
                     Previous
@@ -107,7 +107,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 {hasNextPage ? (
                   <Link
                     href={`/blog?page=${page + 1}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-150"
                   >
                     Next
                     <ArrowRight className="size-3.5" aria-hidden="true" />

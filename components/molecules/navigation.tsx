@@ -17,9 +17,9 @@ import { memo, useCallback, useMemo } from "react";
 export const Navigation = memo(function Navigation() {
   return (
     <motion.header
-      initial={{ opacity: 0, y: -10 }}
+      initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
     >
       <Container className="py-6">
         <div className="flex justify-between items-center">
@@ -36,11 +36,11 @@ export const Navigation = memo(function Navigation() {
 const SiteHeading = memo(function SiteHeading() {
   return (
     <Link href="/" className="group">
-      <h3 className="text-xs lg:text-sm text-muted-foreground transition-colors duration-200">
-        <span className="font-medium text-primary group-hover:text-primary/80 transition-colors duration-200">
+      <h3 className="text-xs lg:text-sm text-muted-foreground transition-colors duration-150">
+        <span className="font-medium text-primary group-hover:text-primary/80 transition-colors duration-150">
           Abhay Bhardwaj{" "}
         </span>
-        <span className="group-hover:text-foreground transition-colors duration-200">
+        <span className="group-hover:text-foreground transition-colors duration-150">
           — Design Engineer
         </span>
       </h3>
@@ -91,13 +91,13 @@ export const NavDock = memo(function NavDock({
     () =>
       prefersReducedMotion
         ? { duration: 0 }
-        : { type: "spring" as const, stiffness: 500, damping: 35 },
+        : { duration: 0.15, ease: "easeOut" as const },
     [prefersReducedMotion],
   );
 
   if (isMobile) {
     return (
-      <nav className="flex items-center gap-1 px-1.5 py-1.5 rounded-full border border-border/50 bg-background/95 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20 will-change-transform">
+      <nav className="flex items-center gap-1 px-1.5 py-1.5 rounded-full border border-border bg-background/95 backdrop-blur-sm shadow-sm will-change-transform">
         {NAV_ITEMS.map((tab) => {
           const isActive = pathname === tab.href;
           const Icon = tab.icon;
@@ -130,7 +130,7 @@ export const NavDock = memo(function NavDock({
         })}
         <span className="w-px h-4 bg-border mx-0.5" aria-hidden="true" />
         <ThemeToggler
-          className="p-2.5 rounded-full text-muted-foreground hover:text-foreground active:scale-95 transition-all duration-150"
+          className="p-2.5 rounded-full text-muted-foreground hover:text-foreground active:scale-95 transition-colors duration-150"
           iconSize={18}
         />
       </nav>
@@ -138,7 +138,7 @@ export const NavDock = memo(function NavDock({
   }
 
   return (
-    <nav className="flex items-center gap-0.5 p-1 rounded-full border border-border/30 bg-card/50 backdrop-blur-sm">
+    <nav className="flex items-center gap-0.5 p-1 rounded-full border border-border bg-card/80">
       {NAV_ITEMS.map((tab) => {
         const isActive = pathname === tab.href;
         return (
@@ -146,7 +146,7 @@ export const NavDock = memo(function NavDock({
             key={tab.href}
             onClick={() => handleActiveTab(tab.href)}
             className={cn(
-              "relative rounded-full text-xs font-medium px-3 py-1.5 transition-colors duration-200",
+              "relative rounded-full text-xs font-medium px-3 py-1.5 transition-colors duration-150",
               "focus-visible:outline-2 focus-visible:outline-primary",
               isActive ? "text-primary-foreground" : "text-muted-foreground",
             )}
@@ -160,7 +160,7 @@ export const NavDock = memo(function NavDock({
                 transition={
                   prefersReducedMotion
                     ? { duration: 0 }
-                    : { type: "spring", stiffness: 400, damping: 30 }
+                    : { duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }
                 }
               />
             )}
@@ -168,9 +168,9 @@ export const NavDock = memo(function NavDock({
           </button>
         );
       })}
-      <span className="w-px h-4 bg-border/50 mx-1" aria-hidden="true" />
+      <span className="w-px h-4 bg-border mx-1" aria-hidden="true" />
       <ThemeToggler
-        className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
+        className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-150"
         iconSize={16}
       />
     </nav>
