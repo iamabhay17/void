@@ -55,6 +55,11 @@ const NAV_ITEMS = [
     label: "Home",
     icon: IconHome,
   },
+  // {
+  //   href: "/projects",
+  //   label: "Projects",
+  //   icon: IconFolder,
+  // },
   {
     href: "/blog",
     label: "Blogs",
