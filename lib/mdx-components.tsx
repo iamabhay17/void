@@ -2,9 +2,14 @@ import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Example, ExampleWrapper } from "@/components/ui/example";
 
 export function useMDXComponents(): MDXComponents {
   return {
+    // Custom Example components
+    Example,
+    ExampleWrapper,
+
     // Headings - consistent with homepage (text-2xl md:text-3xl for h1)
     h1: ({ className, ...props }) => (
       <h1
