@@ -90,38 +90,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Fade.Item>
 
           {/* Header */}
-          <header className="mb-12">
+          <header className="relative mb-12 pb-10 border-b border-border/50 md:pl-6">
+            {/* Decorative accent */}
+            <div className="absolute left-0 top-0 bottom-10 w-0.5 bg-gradient-to-b from-primary via-primary/40 to-transparent rounded-full hidden md:block" />
+            
             <Fade.Item>
-              <div className="flex flex-wrap items-center gap-2 mb-6">
-                <span className="text-xs tabular-nums font-medium text-muted-foreground bg-muted/50 px-2 py-0.5 rounded">
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="text-xs tabular-nums font-medium text-primary/80 bg-primary/10 px-2.5 py-1 rounded-md">
                   {formatDate(post.date)}
                 </span>
-                <span className="text-xs text-muted-foreground bg-muted/50 px-2 py-0.5 rounded">
+                <span className="text-xs text-muted-foreground/80 bg-muted/50 px-2.5 py-1 rounded-md">
                   {post.readingTime}
                 </span>
               </div>
             </Fade.Item>
             <Fade.Item>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground text-pretty mb-6">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground text-balance leading-tight mb-4 md:mb-5">
                 {post.title}
               </h1>
             </Fade.Item>
             <Fade.Item>
-              <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl">
                 {post.description}
               </p>
             </Fade.Item>
           </header>
-
-          {/* Section Divider */}
-          <Fade.Item>
-            <div className="flex items-center gap-4 mb-10">
-              <span className="text-xs lg:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Article
-              </span>
-              <div className="flex-1 h-px bg-border" />
-            </div>
-          </Fade.Item>
 
           {/* Content */}
           <Fade.Item>
