@@ -17,13 +17,14 @@ import {
 } from "@/components/molecules/toc";
 
 interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }
 
 export async function generateStaticParams() {
   const blogs = getAllBlogs();
   return blogs.map((blog) => ({
-    slug: blog.slug,
+    // Split the slug into segments for catch-all route
+    slug: blog.slug.split("/"),
   }));
 }
 
@@ -31,7 +32,9 @@ export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogBySlug(slug);
+  // Join slug segments back into a path
+  const slugPath = slug.join("/");
+  const post = getBlogBySlug(slugPath);
 
   if (!post) {
     return {
@@ -60,7 +63,9 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = getBlogBySlug(slug);
+  // Join slug segments back into a path
+  const slugPath = slug.join("/");
+  const post = getBlogBySlug(slugPath);
 
   if (!post) {
     notFound();

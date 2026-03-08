@@ -26,30 +26,62 @@ export interface BlogPostMeta {
 
 const BLOGS_PATH = path.join(process.cwd(), "content/blogs");
 
-function getBlogFiles(): string[] {
-  if (!fs.existsSync(BLOGS_PATH)) {
-    return [];
-  }
-  return fs
-    .readdirSync(BLOGS_PATH)
-    .filter((file) => file.endsWith(".mdx") || file.endsWith(".md"));
+interface BlogFile {
+  /** Relative path from BLOGS_PATH (e.g., "react/hooks-guide.mdx" or "my-post.mdx") */
+  relativePath: string;
+  /** Absolute path to the file */
+  absolutePath: string;
 }
 
-function parseBlogFile(filename: string): BlogPost | null {
-  const filePath = path.join(BLOGS_PATH, filename);
-  const fileContent = fs.readFileSync(filePath, "utf8");
+function getBlogFilesRecursive(dir: string, basePath: string = ""): BlogFile[] {
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const files: BlogFile[] = [];
+
+  for (const entry of entries) {
+    const relativePath = basePath
+      ? path.join(basePath, entry.name)
+      : entry.name;
+    const absolutePath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      // Recursively get files from subdirectories
+      files.push(...getBlogFilesRecursive(absolutePath, relativePath));
+    } else if (
+      entry.isFile() &&
+      (entry.name.endsWith(".mdx") || entry.name.endsWith(".md"))
+    ) {
+      files.push({ relativePath, absolutePath });
+    }
+  }
+
+  return files;
+}
+
+function getBlogFiles(): BlogFile[] {
+  return getBlogFilesRecursive(BLOGS_PATH);
+}
+
+function parseBlogFile(blogFile: BlogFile): BlogPost | null {
+  const fileContent = fs.readFileSync(blogFile.absolutePath, "utf8");
   const { data, content } = matter(fileContent);
 
   if (!data.published) {
     return null;
   }
 
-  const slug = filename.replace(/\.mdx?$/, "");
+  // Generate slug from relative path, removing extension
+  // e.g., "react/hooks-guide.mdx" -> "react/hooks-guide"
+  // e.g., "my-post.mdx" -> "my-post"
+  const slug = blogFile.relativePath.replace(/\.mdx?$/, "").replace(/\\/g, "/");
   const stats = readingTime(content);
 
   return {
     slug,
-    title: data.title || slug,
+    title: data.title || path.basename(slug),
     description: data.description || "",
     date: data.date
       ? new Date(data.date).toISOString()
@@ -74,13 +106,20 @@ export function getAllBlogs(): BlogPostMeta[] {
 
 export function getBlogBySlug(slug: string): BlogPost | null {
   const files = getBlogFiles();
-  const filename = files.find((file) => file.replace(/\.mdx?$/, "") === slug);
+  // Normalize slug to handle both forward slashes and potential differences
+  const normalizedSlug = slug.replace(/\\/g, "/");
+  const blogFile = files.find((file) => {
+    const fileSlug = file.relativePath
+      .replace(/\.mdx?$/, "")
+      .replace(/\\/g, "/");
+    return fileSlug === normalizedSlug;
+  });
 
-  if (!filename) {
+  if (!blogFile) {
     return null;
   }
 
-  return parseBlogFile(filename);
+  return parseBlogFile(blogFile);
 }
 
 export function getTopBlogs(count: number = 3): BlogPostMeta[] {
