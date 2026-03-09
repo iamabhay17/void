@@ -10,11 +10,11 @@ export function useMDXComponents(): MDXComponents {
     Example,
     ExampleWrapper,
 
-    // Headings - consistent with homepage (text-2xl md:text-3xl for h1)
+    // Headings - smaller, tighter spacing
     h1: ({ className, ...props }) => (
       <h1
         className={cn(
-          "mt-10 scroll-m-20 text-xl md:text-2xl font-bold tracking-tight text-foreground first:mt-0",
+          "mt-6 scroll-m-20 text-xl md:text-2xl font-bold tracking-tight text-foreground first:mt-0",
           className,
         )}
         {...props}
@@ -23,7 +23,7 @@ export function useMDXComponents(): MDXComponents {
     h2: ({ className, ...props }) => (
       <h2
         className={cn(
-          "mt-10 scroll-m-20 border-b border-border pb-2 text-lg md:text-xl font-semibold tracking-tight text-foreground first:mt-0",
+          "mt-6 scroll-m-20 border-b border-border pb-2 text-lg md:text-xl font-semibold tracking-tight text-foreground first:mt-0",
           className,
         )}
         {...props}
@@ -32,7 +32,7 @@ export function useMDXComponents(): MDXComponents {
     h3: ({ className, ...props }) => (
       <h3
         className={cn(
-          "mt-8 scroll-m-20 text-base md:text-lg font-semibold tracking-tight text-foreground",
+          "mt-5 scroll-m-20 text-base md:text-lg font-semibold tracking-tight text-foreground",
           className,
         )}
         {...props}
@@ -41,7 +41,7 @@ export function useMDXComponents(): MDXComponents {
     h4: ({ className, ...props }) => (
       <h4
         className={cn(
-          "mt-6 scroll-m-20 text-sm md:text-base font-semibold tracking-tight text-foreground",
+          "mt-4 scroll-m-20 text-sm md:text-base font-semibold tracking-tight text-foreground",
           className,
         )}
         {...props}
@@ -52,7 +52,7 @@ export function useMDXComponents(): MDXComponents {
     p: ({ className, ...props }) => (
       <p
         className={cn(
-          "mt-4 text-sm leading-relaxed text-muted-foreground not-first:mt-4",
+          "mt-3 text-sm leading-relaxed text-muted-foreground not-first:mt-3",
           className,
         )}
         {...props}
@@ -63,7 +63,7 @@ export function useMDXComponents(): MDXComponents {
     ul: ({ className, ...props }) => (
       <ul
         className={cn(
-          "my-4 ml-6 list-disc text-sm text-muted-foreground [&>li]:mt-2",
+          "my-3 ml-6 list-disc text-sm text-muted-foreground [&>li]:mt-1.5",
           className,
         )}
         {...props}
@@ -72,7 +72,7 @@ export function useMDXComponents(): MDXComponents {
     ol: ({ className, ...props }) => (
       <ol
         className={cn(
-          "my-4 ml-6 list-decimal text-sm text-muted-foreground [&>li]:mt-2",
+          "my-3 ml-6 list-decimal text-sm text-muted-foreground [&>li]:mt-1.5",
           className,
         )}
         {...props}
@@ -86,8 +86,8 @@ export function useMDXComponents(): MDXComponents {
     blockquote: ({ className, ...props }) => (
       <blockquote
         className={cn(
-          "relative mt-6 rounded-r-lg border-l-4 rounded-l-sm border-primary/60 bg-muted py-4 pl-6 pr-4 text-sm italic text-muted-foreground",
-          "[&>p]:mt-0 [&>p:not(:first-child)]:mt-3",
+          "relative mt-4 rounded-r-lg border-l-4 rounded-l-sm border-primary/60 bg-muted py-3 pl-6 pr-4 text-sm italic text-muted-foreground",
+          "[&>p]:mt-0 [&>p:not(:first-child)]:mt-2",
           "before:absolute before:left-3 before:top-3 before:text-2xl before:text-primary/30 before:content-['\\201C']",
           className,
         )}
