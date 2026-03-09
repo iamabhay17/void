@@ -126,6 +126,201 @@
   }
 }
 
+/* Prose wrapper - MDX content typography */
+.prose-wrapper {
+  /* Base typography */
+  font-size: 1rem;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  color: var(--foreground);
+}
+
+.prose-wrapper > * + * {
+  margin-top: 1.5em;
+}
+
+/* Headings */
+.prose-wrapper h1,
+.prose-wrapper h2,
+.prose-wrapper h3,
+.prose-wrapper h4,
+.prose-wrapper h5,
+.prose-wrapper h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--foreground);
+  scroll-margin-top: 5rem;
+}
+
+.prose-wrapper h1 {
+  font-size: 2rem;
+  margin-top: 2.5em;
+  margin-bottom: 0.8em;
+}
+
+.prose-wrapper h2 {
+  font-size: 1.5rem;
+  margin-top: 2.25em;
+  margin-bottom: 0.75em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--border);
+}
+
+.prose-wrapper h3 {
+  font-size: 1.25rem;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+.prose-wrapper h4 {
+  font-size: 1.1rem;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+}
+
+/* Paragraphs */
+.prose-wrapper p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+}
+
+/* Links */
+.prose-wrapper a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.prose-wrapper a:hover {
+  text-decoration-color: var(--primary);
+}
+
+/* Lists */
+.prose-wrapper ul,
+.prose-wrapper ol {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-left: 1.75em;
+}
+
+.prose-wrapper ul {
+  list-style-type: disc;
+}
+
+.prose-wrapper ol {
+  list-style-type: decimal;
+}
+
+.prose-wrapper li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+
+.prose-wrapper li::marker {
+  color: var(--muted-foreground);
+}
+
+/* Nested lists */
+.prose-wrapper ul ul,
+.prose-wrapper ol ol,
+.prose-wrapper ul ol,
+.prose-wrapper ol ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Blockquotes */
+.prose-wrapper blockquote {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  padding-left: 1.25em;
+  border-left: 3px solid var(--primary);
+  color: var(--muted-foreground);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+.prose-wrapper blockquote p {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+/* Inline code */
+.prose-wrapper :not(pre) > code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  background-color: var(--muted);
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+/* Horizontal rule */
+.prose-wrapper hr {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* Strong and emphasis */
+.prose-wrapper strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.prose-wrapper em {
+  font-style: italic;
+}
+
+/* Tables */
+.prose-wrapper table {
+  width: 100%;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.prose-wrapper th,
+.prose-wrapper td {
+  padding: 0.75em 1em;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.prose-wrapper th {
+  font-weight: 600;
+  background-color: var(--muted);
+}
+
+/* Images */
+.prose-wrapper img {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  border-radius: 0.5rem;
+  max-width: 100%;
+  height: auto;
+}
+
+/* First element - no top margin */
+.prose-wrapper > :first-child {
+  margin-top: 0;
+}
+
+/* Last element - no bottom margin */
+.prose-wrapper > :last-child {
+  margin-bottom: 0;
+}
+
 /* Infinite scroll animation */
 @keyframes scroll {
   0% {

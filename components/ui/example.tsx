@@ -17,11 +17,22 @@ export function ExampleWrapper({ children, className }: ExampleWrapperProps) {
   return (
     <div
       className={cn(
-        "my-6 max-w-lg rounded-xl border border-border bg-card shadow-sm overflow-hidden",
+        "group relative my-8 w-full rounded-2xl overflow-hidden",
+        "bg-gradient-to-b from-muted/30 to-muted/10",
+        "border border-border/50",
+        "shadow-[0_1px_3px_rgba(0,0,0,0.05),0_4px_12px_rgba(0,0,0,0.04)]",
+        "dark:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_4px_12px_rgba(0,0,0,0.15)]",
+        "transition-shadow duration-300 hover:shadow-[0_2px_6px_rgba(0,0,0,0.08),0_8px_24px_rgba(0,0,0,0.06)]",
+        "dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.3),0_8px_24px_rgba(0,0,0,0.2)]",
         className,
       )}
     >
-      <div className="p-6">{children}</div>
+      {/* Subtle grid pattern overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,transparent_0%,transparent_49%,var(--border)_49%,var(--border)_51%,transparent_51%,transparent_100%),linear-gradient(to_bottom,transparent_0%,transparent_49%,var(--border)_49%,var(--border)_51%,transparent_51%,transparent_100%)] bg-[size:24px_24px] opacity-[0.03] pointer-events-none" />
+      
+      <div className="relative p-8 md:p-10 flex items-center justify-center min-h-[200px]">
+        {children}
+      </div>
     </div>
   );
 }
@@ -32,10 +43,10 @@ export function ExampleWrapper({ children, className }: ExampleWrapperProps) {
 
 function ExampleSkeleton() {
   return (
-    <div className="flex items-center justify-center p-8">
-      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-        <div className="size-4 border-2 border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin" />
-        Loading example...
+    <div className="flex items-center justify-center p-8 min-h-[200px]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="size-5 border-2 border-muted-foreground/20 border-t-muted-foreground/60 rounded-full animate-spin" />
+        <span className="text-xs font-medium text-muted-foreground/60">Loading example...</span>
       </div>
     </div>
   );
