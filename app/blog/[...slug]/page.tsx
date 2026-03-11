@@ -90,10 +90,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Fade.Item>
 
           {/* Header */}
-          <header className="relative mb-12 pb-10 border-b border-border/50 md:pl-6">
-            {/* Decorative accent */}
-            <div className="absolute left-0 top-0 bottom-10 w-0.5 bg-gradient-to-b from-primary via-primary/40 to-transparent rounded-full hidden md:block" />
-
+          <header className="relative mb-12 pb-10 border-b border-border/50 b">
             <Fade.Item>
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <span className="text-xs tabular-nums font-medium text-primary/80 bg-primary/10 px-2.5 py-1 rounded-md">

@@ -33,9 +33,9 @@ export function GitHubContributionGraph({
   return (
     <ContributionGraph
       data={data}
-      blockSize={isMobile ? 12 : 14}
-      blockMargin={isMobile ? 4 : 4}
-      blockRadius={2}
+      blockSize={isMobile ? 11 : 13}
+      blockMargin={isMobile ? 3 : 4}
+      blockRadius={3}
     >
       <ContributionGraphCalendar
         className="no-scrollbar"
@@ -49,6 +49,7 @@ export function GitHubContributionGraph({
                 dayIndex={dayIndex}
                 weekIndex={weekIndex}
                 className={cn(
+                  "transition-all duration-150 hover:ring-2 hover:ring-foreground/20 hover:ring-offset-1",
                   'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
                   'data-[level="1"]:fill-[#9be9a8] dark:data-[level="1"]:fill-[#0e4429]',
                   'data-[level="2"]:fill-[#40c463] dark:data-[level="2"]:fill-[#006d32]',
@@ -59,8 +60,17 @@ export function GitHubContributionGraph({
             </TooltipTrigger>
 
             <TooltipContent className="font-sans">
-              <p>
-                {activity.count} contribution{activity.count > 1 ? "s" : null}{" "}
+              <p className="font-medium">
+                {activity.count === 0 ? (
+                  <span className="text-muted-foreground">
+                    No contributions
+                  </span>
+                ) : (
+                  <>
+                    <span className="text-emerald-500">{activity.count}</span>{" "}
+                    contribution{activity.count > 1 ? "s" : ""}
+                  </>
+                )}{" "}
                 on {formatDate(new Date(activity.date))}
               </p>
             </TooltipContent>
@@ -68,19 +78,38 @@ export function GitHubContributionGraph({
         )}
       </ContributionGraphCalendar>
 
-      <ContributionGraphFooter>
+      <ContributionGraphFooter className="mt-4 flex flex-wrap items-center justify-between gap-2">
         <ContributionGraphTotalCount>
           {({ totalCount, year }) => (
-            <div
-              className={cn(
-                "text-muted-foreground",
-                isMobile ? "text-xs" : "text-sm",
-              )}
-            >
-              {totalCount.toLocaleString("en")} contributions in {year}
+            <div className="flex items-center gap-2 text-xs text-muted-foreground sm:text-sm">
+              <span className="font-semibold text-foreground">
+                {totalCount.toLocaleString("en")}
+              </span>
+              <span>contributions in {year}</span>
             </div>
           )}
         </ContributionGraphTotalCount>
+
+        {/* Legend */}
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <span>Less</span>
+          <div className="flex gap-0.5">
+            {[0, 1, 2, 3, 4].map((level) => (
+              <div
+                key={level}
+                className={cn(
+                  "size-3 rounded-sm",
+                  level === 0 && "bg-[#ebedf0] dark:bg-[#161b22]",
+                  level === 1 && "bg-[#9be9a8] dark:bg-[#0e4429]",
+                  level === 2 && "bg-[#40c463] dark:bg-[#006d32]",
+                  level === 3 && "bg-[#30a14e] dark:bg-[#26a641]",
+                  level === 4 && "bg-[#216e39] dark:bg-[#39d353]",
+                )}
+              />
+            ))}
+          </div>
+          <span>More</span>
+        </div>
       </ContributionGraphFooter>
     </ContributionGraph>
   );

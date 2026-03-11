@@ -1,28 +1,42 @@
 import "@/styles/globals.css";
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Inter, Shantell_Sans } from "next/font/google";
+import {
+  Sora,
+  Lexend,
+  JetBrains_Mono,
+  Instrument_Serif,
+} from "next/font/google";
 import { Navigation } from "@/components/molecules/navigation";
 import { Providers } from "@/components/molecules/providers";
 import { MobileNavWrapper } from "@/components/molecules/mobile-nav-wrapper";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Heading font - modern geometric with soft curves
+const sora = Sora({
+  variable: "--font-heading",
   subsets: ["latin"],
-});
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Body font - designed for optimal reading with built-in spacing
+const lexend = Lexend({
+  variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const fontHandwriting = Shantell_Sans({
+// Code font - optimized for programming
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  variable: "--font-handwriting",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
+});
+
+// Accent serif for special elements
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
 export const viewport: Viewport = {
@@ -56,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${fontHandwriting.variable} font-inter antialiased`}
+        className={`${sora.variable} ${lexend.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased`}
       >
         <Providers>
           <div className="relative bg-background">

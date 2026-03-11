@@ -2,6 +2,7 @@
 
 import { Activity } from "@/components/ui/contribution-graph";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface GitHubUser {
   followers: number;
@@ -21,6 +22,7 @@ export const ProfileStats = () => {
     respositories: "—",
     contributions: "—",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -48,6 +50,8 @@ export const ProfileStats = () => {
         });
       } catch (error) {
         console.error("Failed to fetch GitHub stats:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -55,22 +59,34 @@ export const ProfileStats = () => {
   }, []);
 
   const STATS = [
-    { label: "Followers", value: stats.followers },
-    { label: "Repositories", value: stats.respositories },
-    { label: "Contributions", value: stats.contributions },
+    { label: "Followers", value: stats.followers, color: "text-primary" },
+    { label: "Repos", value: stats.respositories, color: "text-emerald-500" },
+    {
+      label: "Contributions",
+      value: stats.contributions,
+      color: "text-amber-500",
+    },
   ];
 
   return (
-    <div className="grid grid-cols-3 divide-x divide-border">
-      {STATS.map((stat) => (
+    <div className="grid grid-cols-3">
+      {STATS.map((stat, index) => (
         <div
           key={stat.label}
-          className="flex flex-col items-center gap-0.5 py-4"
+          className={cn(
+            "group relative flex flex-col items-center gap-1 py-5 transition-colors hover:bg-muted/30",
+            index !== STATS.length - 1 && "border-r border-border",
+          )}
         >
-          <span className="text-lg md:text-xl font-bold text-foreground sm:text-2xl">
+          <span
+            className={cn(
+              "text-xl font-bold sm:text-2xl md:text-3xl tabular-nums transition-transform group-hover:scale-105",
+              isLoading ? "animate-pulse text-muted-foreground" : stat.color,
+            )}
+          >
             {stat.value}
           </span>
-          <span className="text-xs font-medium text-muted-foreground sm:text-sm">
+          <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground sm:text-xs">
             {stat.label}
           </span>
         </div>
