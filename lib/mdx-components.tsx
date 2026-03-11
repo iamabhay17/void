@@ -1,47 +1,109 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
+import { LinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Example, ExampleWrapper } from "@/components/ui/example";
+import { Callout } from "@/components/ui/callout";
+import { Steps, Step } from "@/components/ui/steps";
+import { CommandBlock } from "@/components/ui/command-block";
+import {
+  ComponentPreview,
+  ComponentPreviewStacked,
+  Preview,
+} from "@/components/ui/component-preview";
+
+// Heading with anchor link
+function Heading({
+  as: Tag,
+  className,
+  children,
+  id,
+  ...props
+}: {
+  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  className?: string;
+  children?: React.ReactNode;
+  id?: string;
+} & React.HTMLAttributes<HTMLHeadingElement>) {
+  if (!id) {
+    return (
+      <Tag className={className} {...props}>
+        {children}
+      </Tag>
+    );
+  }
+
+  return (
+    <Tag
+      className={cn("group flex flex-row items-center gap-2", className)}
+      id={id}
+      {...props}
+    >
+      <a href={`#${id}`} className="peer">
+        {children}
+      </a>
+      <LinkIcon
+        className="size-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
+        aria-label="Link to section"
+      />
+    </Tag>
+  );
+}
 
 export function useMDXComponents(): MDXComponents {
   return {
-    // Custom Example components
+    // Custom Example components (legacy)
     Example,
     ExampleWrapper,
 
-    // Headings - smaller, tighter spacing
+    // Component Preview (chanhdai.com style)
+    ComponentPreview,
+    ComponentPreviewStacked,
+    Preview,
+
+    // Custom components
+    Callout,
+    Steps,
+    Step,
+    CommandBlock,
+
+    // Headings with anchor links
     h1: ({ className, ...props }) => (
-      <h1
+      <Heading
+        as="h1"
         className={cn(
-          "mt-6 scroll-m-20 text-xl md:text-2xl font-bold tracking-tight text-foreground first:mt-0",
+          "mt-8 scroll-m-20 text-xl md:text-2xl font-bold tracking-tight text-foreground first:mt-0",
           className,
         )}
         {...props}
       />
     ),
     h2: ({ className, ...props }) => (
-      <h2
+      <Heading
+        as="h2"
         className={cn(
-          "mt-6 scroll-m-20 border-b border-border pb-2 text-lg md:text-xl font-semibold tracking-tight text-foreground first:mt-0",
+          "mt-10 scroll-m-20 border-b border-border pb-2 text-lg md:text-xl font-semibold tracking-tight text-foreground first:mt-0",
           className,
         )}
         {...props}
       />
     ),
     h3: ({ className, ...props }) => (
-      <h3
+      <Heading
+        as="h3"
         className={cn(
-          "mt-5 scroll-m-20 text-base md:text-lg font-semibold tracking-tight text-foreground",
+          "mt-8 scroll-m-20 text-base md:text-lg font-semibold tracking-tight text-foreground",
           className,
         )}
         {...props}
       />
     ),
     h4: ({ className, ...props }) => (
-      <h4
+      <Heading
+        as="h4"
         className={cn(
-          "mt-4 scroll-m-20 text-sm md:text-base font-semibold tracking-tight text-foreground",
+          "mt-6 scroll-m-20 text-sm md:text-base font-semibold tracking-tight text-foreground",
           className,
         )}
         {...props}
@@ -117,10 +179,7 @@ export function useMDXComponents(): MDXComponents {
     // Code blocks with syntax highlighting support
     pre: ({ className, children, ...props }) => (
       <pre
-        className={cn(
-          "group relative my-6 overflow-x-auto rounded-lg border border-border bg-[#0d1117] p-4 text-sm",
-          className,
-        )}
+        className={cn("group relative overflow-x-auto", className)}
         {...props}
       >
         {children}
@@ -128,24 +187,17 @@ export function useMDXComponents(): MDXComponents {
     ),
     code: ({ className, children, ...props }) => {
       // Check if it's a code block (has data-language) or inline
-      const isCodeBlock = className?.includes("language-");
+      const isCodeBlock = "data-language" in props;
       if (isCodeBlock) {
         return (
-          <code className={cn("font-mono text-[13px]", className)} {...props}>
+          <code className={cn("font-mono text-sm", className)} {...props}>
             {children}
           </code>
         );
       }
       // Inline code
       return (
-        <code
-          className={cn(
-            "rounded font-mono text-[13px] text-foreground",
-            className,
-            "inline-code",
-          )}
-          {...props}
-        >
+        <code className={cn("code-inline", className)} {...props}>
           {children}
         </code>
       );

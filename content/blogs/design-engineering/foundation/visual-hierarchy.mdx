@@ -32,10 +32,27 @@ There are several techniques to establish hierarchy. Each can be used independen
 
 Larger elements naturally draw more attention. Use size to establish the relative importance of elements.
 
-<Example
-  name="visual-hierarchy/Size"
-  caption="Larger = more important. The eye is drawn to bigger elements first."
-/>
+<ComponentPreview name="visual-hierarchy/Size">
+
+```tsx
+// Size creates visual importance
+<div className="flex items-end gap-6">
+  <div className="text-center">
+    <div className="w-16 h-16 bg-primary rounded-lg" />
+    <span className="text-xs text-muted-foreground mt-2 block">Primary</span>
+  </div>
+  <div className="text-center">
+    <div className="w-12 h-12 bg-primary/70 rounded-lg" />
+    <span className="text-xs text-muted-foreground mt-2 block">Secondary</span>
+  </div>
+  <div className="text-center">
+    <div className="w-8 h-8 bg-primary/40 rounded-lg" />
+    <span className="text-xs text-muted-foreground mt-2 block">Tertiary</span>
+  </div>
+</div>
+```
+
+</ComponentPreview>
 
 **Best practices:**
 
@@ -47,10 +64,18 @@ Larger elements naturally draw more attention. Use size to establish the relativ
 
 High-contrast elements pop against low-contrast surroundings. Use color strategically to create focal points.
 
-<Example
-  name="visual-hierarchy/Color"
-  caption="Contrast creates emphasis. Primary content stands out, supporting content recedes."
-/>
+<ComponentPreview name="visual-hierarchy/Color">
+
+```tsx
+// Contrast creates emphasis
+<div className="space-y-2">
+  <p className="text-foreground font-medium">High emphasis — Primary content</p>
+  <p className="text-muted-foreground">Medium emphasis — Secondary content</p>
+  <p className="text-muted-foreground/50">Low emphasis — Tertiary content</p>
+</div>
+```
+
+</ComponentPreview>
 
 **Best practices:**
 
@@ -62,10 +87,25 @@ High-contrast elements pop against low-contrast surroundings. Use color strategi
 
 Font weight, size, and style work together to create textual hierarchy.
 
-<Example
-  name="visual-hierarchy/Typography"
-  caption="Weight, size, and style create a clear reading order."
-/>
+<ComponentPreview name="visual-hierarchy/Typography">
+
+```tsx
+// Weight, size, and style create reading order
+<div className="space-y-3">
+  <p className="text-xl font-bold text-foreground">Bold Title</p>
+  <p className="text-base font-medium text-foreground">
+    Medium Weight Subtitle
+  </p>
+  <p className="text-sm font-normal text-muted-foreground">
+    Regular body text with lighter weight for supporting information.
+  </p>
+  <p className="text-xs italic text-muted-foreground/70">
+    Small italic caption or metadata
+  </p>
+</div>
+```
+
+</ComponentPreview>
 
 **Best practices:**
 
@@ -77,10 +117,28 @@ Font weight, size, and style work together to create textual hierarchy.
 
 Whitespace groups related items and separates different sections. Proximity implies relationship.
 
-<Example
-  name="visual-hierarchy/Spacing"
-  caption="Tight spacing = related content. Large gaps = separate sections."
-/>
+<ComponentPreview name="visual-hierarchy/Spacing">
+
+```tsx
+// Proximity implies relationship
+<div className="space-y-6">
+  <div className="space-y-1">
+    <h4 className="text-sm font-semibold text-foreground">Section One</h4>
+    <p className="text-xs text-muted-foreground">
+      Tight spacing groups related content together.
+    </p>
+  </div>
+
+  <div className="space-y-1">
+    <h4 className="text-sm font-semibold text-foreground">Section Two</h4>
+    <p className="text-xs text-muted-foreground">
+      Large gap above separates this from the previous section.
+    </p>
+  </div>
+</div>
+```
+
+</ComponentPreview>
 
 **Best practices:**
 
@@ -92,10 +150,24 @@ Whitespace groups related items and separates different sections. Proximity impl
 
 Shadows and layering create a sense of depth, making certain elements feel closer to the user.
 
-<Example
-  name="visual-hierarchy/Depth"
-  caption="Elevated elements with shadows draw focus and feel interactive."
-/>
+<ComponentPreview name="visual-hierarchy/Depth">
+
+```tsx
+// Elevation draws focus
+<div className="relative flex items-center justify-center gap-4 py-4">
+  <div className="w-20 h-14 rounded-lg bg-muted flex items-center justify-center text-xs text-muted-foreground">
+    Base
+  </div>
+  <div className="w-20 h-14 rounded-lg bg-card border border-border shadow-sm flex items-center justify-center text-xs text-foreground">
+    Elevated
+  </div>
+  <div className="w-20 h-14 rounded-lg bg-card border border-border shadow-lg flex items-center justify-center text-xs font-medium text-foreground">
+    Focus
+  </div>
+</div>
+```
+
+</ComponentPreview>
 
 **Best practices:**
 
@@ -107,10 +179,42 @@ Shadows and layering create a sense of depth, making certain elements feel close
 
 The best interfaces combine multiple hierarchy techniques. Here's an example that uses size, color, typography, spacing, and depth together:
 
-<Example
-  name="visual-hierarchy/Combined"
-  caption="All techniques working in harmony: size, color, typography, spacing, and depth"
-/>
+<ComponentPreview name="visual-hierarchy/Combined">
+
+```tsx
+// All techniques working together
+<div className="p-4 rounded-lg border border-border bg-card shadow-sm space-y-4">
+  <div className="space-y-1">
+    <h3 className="text-lg font-semibold text-foreground">Upgrade to Pro</h3>
+    <p className="text-sm text-muted-foreground">
+      Unlock all features and get priority support.
+    </p>
+  </div>
+
+  <ul className="space-y-2 text-sm text-muted-foreground">
+    <li className="flex items-center gap-2">
+      <span className="text-primary">✓</span> Unlimited projects
+    </li>
+    <li className="flex items-center gap-2">
+      <span className="text-primary">✓</span> Advanced analytics
+    </li>
+    <li className="flex items-center gap-2">
+      <span className="text-primary">✓</span> Priority support
+    </li>
+  </ul>
+
+  <div className="flex gap-2 pt-2">
+    <button className="flex-1 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md shadow-sm">
+      Upgrade Now
+    </button>
+    <button className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">
+      Learn more
+    </button>
+  </div>
+</div>
+```
+
+</ComponentPreview>
 
 Notice how your eye naturally flows from the headline → description → features → primary action. That's visual hierarchy at work.
 

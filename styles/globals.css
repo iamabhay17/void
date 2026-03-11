@@ -142,32 +142,22 @@
 
 /* Syntax Highlighting - rehype-pretty-code */
 [data-rehype-pretty-code-figure] {
-  position: relative;
-  margin: 1.5rem 0;
-  max-width: 100%;
+  @apply relative my-6 overflow-hidden rounded-xl bg-muted/30;
 }
 
 [data-rehype-pretty-code-figure] pre {
-  overflow-x: auto;
+  @apply overflow-x-auto border-none bg-transparent p-4;
   -webkit-overflow-scrolling: touch;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border);
-  background-color: oklch(0.96 0 0);
-  padding: 1rem;
   font-size: 13px;
-  line-height: 1.6;
-  max-width: 100%;
+  line-height: 1.7;
 }
 
 .dark [data-rehype-pretty-code-figure] pre {
-  background-color: oklch(0.12 0 0);
+  background-color: transparent;
 }
 
 [data-rehype-pretty-code-figure] code {
-  display: block;
-  min-width: max-content;
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 13px;
+  @apply block w-max min-w-full font-mono text-sm;
 }
 
 /* Shiki dual theme CSS variables - light mode uses light theme colors */
@@ -183,65 +173,42 @@
 }
 
 [data-rehype-pretty-code-figure] code > [data-line] {
-  display: block;
-  padding: 0 0.5rem;
-  border-left: 2px solid transparent;
+  @apply block py-0.5 px-4;
 }
 
 [data-rehype-pretty-code-figure] code > [data-highlighted-line] {
-  background-color: rgba(0, 0, 0, 0.06);
-  border-left-color: oklch(0.5 0.15 250);
+  @apply bg-foreground/5;
 }
 
 .dark [data-rehype-pretty-code-figure] code > [data-highlighted-line] {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-left-color: #58a6ff;
+  @apply bg-foreground/10;
 }
 
 [data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-  display: inline-block;
-  width: 1rem;
-  margin-right: 1.5rem;
-  text-align: right;
-  color: oklch(0.55 0 0);
-  font-size: 12px;
+  @apply sticky left-0 inline-block w-12 bg-transparent pr-4 text-right text-sm text-muted-foreground/60;
 }
 
 .dark [data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
-  color: #6e7681;
+  @apply text-muted-foreground/50;
 }
 
 [data-rehype-pretty-code-figure] [data-line-numbers-max-digits="2"] > [data-line]::before {
-  width: 1.5rem;
+  width: 2rem;
 }
 
 [data-rehype-pretty-code-figure] [data-line-numbers-max-digits="3"] > [data-line]::before {
-  width: 2rem;
+  width: 2.5rem;
 }
 
 /* Code title/caption */
 [data-rehype-pretty-code-title] {
-  border: 1px solid var(--border);
-  border-bottom: none;
-  border-radius: 0.5rem 0.5rem 0 0;
-  background-color: oklch(0.94 0 0);
-  padding: 0.5rem 1rem;
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 12px;
-  color: oklch(0.4 0 0);
-}
-
-.dark [data-rehype-pretty-code-title] {
-  background-color: #161b22;
-  color: #8b949e;
+  @apply flex items-center gap-3 border-b border-border bg-muted/50 px-4 py-2.5 font-mono text-xs text-muted-foreground;
 }
 
 [data-rehype-pretty-code-title] + pre {
-  margin-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  @apply rounded-t-none;
 }
 
 /* Custom animations */
@@ -261,4 +228,36 @@
 /* Gradient conic utility */
 .bg-gradient-conic {
   background: conic-gradient(var(--tw-gradient-stops));
+}
+
+/* Step counter for Steps component */
+@utility step {
+  counter-increment: step;
+  &::before {
+    @apply mr-3 inline-flex size-7 items-center justify-center rounded-full border border-border bg-muted text-center text-sm font-medium text-muted-foreground md:absolute md:-mt-0.5 md:-ml-12 md:size-8;
+    content: counter(step);
+  }
+}
+
+/* Inline code styling */
+@utility code-inline {
+  @apply rounded-md border border-border bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem] whitespace-pre-wrap;
+}
+
+/* Code block fade overlay for copy button */
+[data-fade-overlay] {
+  @apply pointer-events-none absolute top-0 right-0 z-10 rounded-tr-lg;
+
+  --fade-linear-gradient: linear-gradient(
+    to right,
+    transparent 0,
+    color-mix(in oklab, var(--fade-color, var(--background)) 20%, transparent) 10px,
+    color-mix(in oklab, var(--fade-color, var(--background)) 50%, transparent) 25px,
+    color-mix(in oklab, var(--fade-color, var(--background)) 80%, transparent) 35px,
+    var(--fade-color, var(--background)) 45px
+  );
+
+  width: var(--fade-width, 6rem);
+  height: var(--fade-height, 2.5rem);
+  background: var(--fade-background, var(--fade-linear-gradient));
 }
